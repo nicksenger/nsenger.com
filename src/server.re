@@ -1,3 +1,5 @@
+[@bs.config {jsx: 3}];
+
 /* make the express app */
 let app = Express.App.make();
 
