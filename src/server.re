@@ -5,7 +5,7 @@ let app = Express.App.make();
 
 /* Our initial rendering function, we will soon make this way better */
 let renderHTML = (_next, _req, res) => {
-  let content = ReactDOMServerRe.renderToString(<Component2 greeting="Hello!" />);
+  let content = ReactDOMServerRe.renderToString(<Header />);
   Express.Response.sendString(content, res);
 };
 
