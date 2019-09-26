@@ -1,4 +1,2 @@
 [@react.component]
-let make = () => {
-  <IChing />
-};
+let make = () => <IChing />;

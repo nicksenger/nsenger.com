@@ -1,1 +1,1 @@
-ReactDOMRe.renderToElementWithId(<Header />, "index1");
+ReactDOMRe.renderToElementWithId(<Header />, "root");
