@@ -1,1 +1,2 @@
-ReactDOMRe.renderToElementWithId(<Header />, "root");
+ReactDOMRe.renderToElementWithId(<Body serverUrl=None />, "root");
+ReasonReactRouter.push("");

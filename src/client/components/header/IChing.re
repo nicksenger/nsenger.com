@@ -89,7 +89,6 @@ let hexagrams =
 [@react.component]
 let make = () => {
   let size = 45;
-  ReasonReact.array(
     Array.of_list(
       List.mapi(
         (i1, h) =>
@@ -132,6 +131,5 @@ let make = () => {
           </div>,
         hexagrams,
       ),
-    ),
-  );
+    )[0];
 };

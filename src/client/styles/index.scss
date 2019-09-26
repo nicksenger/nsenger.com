@@ -1,2 +1,63 @@
 @import "~fluorophore/index";
 @import "./_Header/index";
+
+@include reset();
+@include typography-styles();
+@include typography-imports();
+@include animation-styles();
+@include form();
+
+.sio__body {
+  margin: 0;
+}
+
+.sio__container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.sio__header {
+  display: none;
+  @media (max-width: 700px) {
+      display: block;
+  }
+}
+
+.sio__main {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.sio__name {
+  max-width: 400px;
+}
+
+.sio__about {
+  max-width: 400px;
+}
+
+.sio__contact {
+  width: 100%;
+  max-width: 400px;
+}
+
+@media (max-width: 700px) {
+  .sio__name--hidden, .sio__about--hidden, .sio__contact--hidden {
+    display: none;
+  }
+}
+
+.sio__submit-btn {
+  @include btn();
+  @include btn-clear();
+  @include btn-small();
+}
+
+.sio__footer {
+  text-align: center;
+}
