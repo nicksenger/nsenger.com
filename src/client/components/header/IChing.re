@@ -86,50 +86,57 @@ let hexagrams =
   |> List.sort((a, b) => fst(a) - fst(b))
   |> List.map(snd);
 
-[@react.component]
-let make = () => {
-  let size = 45;
-    Array.of_list(
-      List.mapi(
-        (i1, h) =>
-          <div
-            key=(string_of_int(i1))
-            className="iching__container"
-            style=(
-              ReactDOMRe.Style.make(
-                ~width=string_of_int(size) ++ "px",
-                ~height=string_of_int(size - size / 5) ++ "px",
-                (),
-              )
-            )>
-            <svg viewBox="0 0 15 12" className="iching__svg">
-              (
-                ReasonReact.array(
-                  Array.of_list(
-                    List.mapi(
-                      (i2, l) => {
-                        let offset = string_of_int(13 - 2 * abs(6 - i2));
-                        switch (l) {
-                        | Yin =>
-                          <g key=(string_of_int(i2))>
-                            <path d={j|M1,$offset L5,$offset|j} />
-                            <path d={j|M10,$offset L14,$offset|j} />
-                          </g>
-                        | Yang =>
-                          <g key=(string_of_int(i2))>
-                            <path d={j|M1,$offset L7,$offset|j} />
-                            <path d={j|M8,$offset L14,$offset|j} />
-                          </g>
-                        };
-                      },
-                      h,
-                    ),
-                  ),
-                )
-              )
-            </svg>
-          </div>,
-        hexagrams,
-      ),
-    )[0];
+let coinToss = () => Random.int(2) + 2;
+let getLine = () => {
+  let result = coinToss() + coinToss() + coinToss();
+  switch (result) {
+  | 6 => Yin
+  | 7 => Yang
+  | 8 => Yin
+  | _ => Yang
+  };
 };
+let divine = () => {
+  let hex = List.map(_ => getLine(), [1, 2, 3, 4, 5, 6]);
+  let hindex = List.mapi((id, h) => (id, h), hexagrams);
+  List.find(h => snd(h) == hex, hindex) |> snd;
+};
+
+[@react.component]
+let make = (~size: int=45, ~hexagram: list(line)) =>
+  <div
+    className="iching__container"
+    style=(
+      ReactDOMRe.Style.make(
+        ~width=string_of_int(size) ++ "px",
+        ~height=string_of_int(size - size / 5) ++ "px",
+        (),
+      )
+    )>
+    <svg viewBox="0 0 15 12" className="iching__svg">
+      (
+        ReasonReact.array(
+          Array.of_list(
+            List.mapi(
+              (i2, l) => {
+                let offset = string_of_int(13 - 2 * abs(6 - i2));
+                switch (l) {
+                | Yin =>
+                  <g key=(string_of_int(i2))>
+                    <path d={j|M1,$offset L5,$offset|j} />
+                    <path d={j|M10,$offset L14,$offset|j} />
+                  </g>
+                | Yang =>
+                  <g key=(string_of_int(i2))>
+                    <path d={j|M1,$offset L7,$offset|j} />
+                    <path d={j|M8,$offset L14,$offset|j} />
+                  </g>
+                };
+              },
+              hexagram,
+            ),
+          ),
+        )
+      )
+    </svg>
+  </div>;
