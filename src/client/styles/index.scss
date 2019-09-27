@@ -20,13 +20,6 @@
   min-height: 100vh;
 }
 
-.sio__header {
-  display: none;
-  @media (max-width: 700px) {
-      display: block;
-  }
-}
-
 .sio__main {
   align-items: center;
   display: flex;
@@ -73,13 +66,16 @@
   opacity: 1;
   background-color: white;
   border-bottom: 1px solid $lighter-gray;
-  display: flex;
   height: 58px;
   justify-content: center;
   position: fixed;
   width: 100%;
   z-index: 2;
   animation: in-down 500ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: none;
+  @media (max-width: 700px) {
+      display: flex;
+  }
 }
 
 .sio__menu-container {

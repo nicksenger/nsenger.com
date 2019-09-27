@@ -19,27 +19,31 @@ type action =
 
 [@react.component]
 let make = (~serverUrl: option(ReasonReactRouter.url)) => {
-  let (state, dispatch) =
+  let (menuOpen, dispatch) =
     React.useReducer(
       (state, action) =>
         switch (action) {
-        | ToggleMenu => {menuOpen: ! state.menuOpen}
+        | ToggleMenu => !state
         },
-      {menuOpen: false},
+      false,
     );
-  let url = switch (serverUrl) {
-  | Some(url) => url
-  | None => ReasonReactRouter.useUrl(())
-  }
+  let toggleMenu = () => dispatch(ToggleMenu)
+  let url =
+    switch (serverUrl) {
+    | Some(url) => url
+    | None => ReasonReactRouter.useUrl()
+    };
   let route = mapUrlToRoute(url);
 
   <>
-    <Header />
-    <main className="sio__main">
+    <UrlProvider value=(url)>
+      <Header />
+      <main className="sio__main">
       <Name visible=(route == Home) />
       <About visible=(route == About) />
       <Contact visible=(route == Contact) />
-    </main>
-    <Footer />
+      </main>
+      <Footer />
+    </UrlProvider>
   </>;
 };
