@@ -18,11 +18,16 @@ let make = (~serverUrl: option(ReasonReactRouter.url)) => {
     React.useReducer(
       (state, action) =>
         switch (action) {
-        | ToggleMenu => !state
+        | ToggleMenu =>
+          switch (state) {
+          | Types.Initial => Types.Open
+          | Types.Open => Types.Closed
+          | Types.Closed => Types.Open
+          }
         },
-      false,
+      Types.Initial,
     );
-  let toggleMenu = () => dispatch(ToggleMenu)
+  let toggleMenu = () => dispatch(ToggleMenu);
   let url =
     switch (serverUrl) {
     | Some(url) => url
@@ -31,15 +36,15 @@ let make = (~serverUrl: option(ReasonReactRouter.url)) => {
   let route = mapUrlToRoute(url);
 
   <>
-    <UrlProvider value=(url)>
-      <Header toggleMenu=toggleMenu />
+    <UrlProvider value=url>
+      <Header toggleMenu />
       <main className="sio__main">
-      <Name visible=(route == Types.Home) />
-      <About visible=(route == Types.About) />
-      <Contact visible=(route == Types.Contact) />
+        <Name visible=(route == Types.Home) />
+        <About visible=(route == Types.About) />
+        <Contact visible=(route == Types.Contact) />
       </main>
-      <Footer route=route menuOpen=menuOpen />
-      <Burger menuOpen=menuOpen toggleMenu=toggleMenu />
+      <Burger menuOpen toggleMenu />
+      <Footer route menuOpen />
     </UrlProvider>
   </>;
 };

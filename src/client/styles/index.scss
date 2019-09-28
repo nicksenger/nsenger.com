@@ -10,6 +10,15 @@
   margin: 0;
 }
 
+.sio__image {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  border: 2px solid white;
+  box-shadow: 0px 2px 4px $gray;
+  margin-bottom: 1rem;
+}
+
 .sio__title {
   @include margin-bottom(1);
 }
@@ -56,6 +65,11 @@
   @include btn();
   @include btn-clear();
   @include btn-small();
+
+  &:disabled {
+    @include btn-clear-gray();
+    pointer-events: none;
+  }
 }
 
 .sio__header {
@@ -81,7 +95,7 @@
   left: 0px;
   top: 0px;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
   z-index: 2;
   touch-action: none;
@@ -127,7 +141,7 @@
 }
 
 .sio__footer--shifted {
-  transform: translate(100%, 0%);
+  transform: translate(-100%, 0%);
 }
 
 .sio__footer-link {
@@ -175,7 +189,7 @@
 
 .sio__burger-container {
   display: none;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0);
   position: fixed;
   height: calc(100vh - 59px);
   top: 59px;
@@ -184,17 +198,21 @@
   @media (max-width: 700px) {
       display: block;
   }
-  animation: background-fade 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.sio__burger-container--closed {
-  background-color: rgba(0, 0, 0, 0);
-  animation: background-out 0.5s ease-in-out;
   pointer-events: none;
 }
 
+.sio__burger-container--open {
+  background-color: rgba(0, 0, 0, 0.7);  
+  animation: background-fade 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+  pointer-events: all;
+}
+
+.sio__burger-container--closed {
+  animation: background-out 0.5s ease-in-out;
+}
+
 .sio__burger-panel {
-  animation: enter-panel 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform: translate(-100%, 0px);
   background-color: white;
   box-sizing: border-box;
   width: 100%;
@@ -216,8 +234,12 @@
   }
 }
 
+.sio__burger-panel--open {
+  transform: translate(0px, 0px);
+  animation: enter-panel 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
 .sio__burger-panel--closed {
-  transform: translate(-100%, 0px);
   animation: exit-panel 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
@@ -241,7 +263,7 @@
 
 @keyframes enter-panel {
   0% {
-      transform: translate(-100%, 0px);
+      transform: translate(100%, 0px);
   }
   100% {
       transform: translate(0px, 0px);
@@ -253,6 +275,6 @@
       transform: translate(0px, 0px);
   }
   100% {
-      transform: translate(-100%, 0px);
+      transform: translate(100%, 0px);
   }
 }

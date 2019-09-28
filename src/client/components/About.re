@@ -6,8 +6,8 @@ let make = (~visible: bool) =>
       (
         React.string(
           {j|I am a software engineer with experience building scalable web & native
-             applications using modern techniques. Some things that interest me are:
-             biotech, functional programming, foreign language study, and the I Ching.
+             applications using modern techniques. Some or my interests include:
+             biotech, foreign language study, functional programming, and homebrewing.
              If you need technical assistance developing an app or project, feel free
              to reach out|j},
         )

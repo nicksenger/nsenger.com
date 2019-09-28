@@ -1,6 +1,12 @@
 [@react.component]
 let make = (~route: Types.route, ~menuOpen) =>
-  <footer className=(menuOpen ? "sio__footer sio__footer--shifted" : "sio__footer")>
+  <footer
+    className=(
+      switch (menuOpen) {
+      | Types.Open => "sio__footer sio__footer--shifted"
+      | _ => "sio__footer"
+      }
+    )>
     <A
       className=(
         switch (route) {
