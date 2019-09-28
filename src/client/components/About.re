@@ -9,8 +9,12 @@ let make = (~visible: bool) =>
              applications using modern techniques. Some things that interest me are:
              biotech, functional programming, foreign language study, and the I Ching.
              If you need technical assistance developing an app or project, feel free
-             to reach out using the form below:|j},
+             to reach out|j},
         )
       )
+      <span className="sio__small-only"> (React.string(".")) </span>
+      <span className="sio__big-only">
+        (React.string({j| using the form below:|j}))
+      </span>
     </p>
   </section>;

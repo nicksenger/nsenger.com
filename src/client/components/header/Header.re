@@ -1,2 +1,2 @@
 [@react.component]
-let make = () => <header className="sio__header"> <Menu /> </header>;
+let make = (~toggleMenu) => <header className="sio__header"> <Menu toggleMenu=toggleMenu /> </header>;

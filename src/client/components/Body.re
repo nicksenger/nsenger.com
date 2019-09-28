@@ -1,15 +1,10 @@
-type route =
-  | Home
-  | About
-  | Contact;
-
 let mapUrlToRoute = (url: ReasonReact.Router.url) =>
   switch (url.path) {
-  | [] => Home
-  | ["home"] => Home
-  | ["about"] => About
-  | ["contact"] => Contact
-  | _ => Home
+  | [] => Types.Home
+  | ["home"] => Types.Home
+  | ["about"] => Types.About
+  | ["contact"] => Types.Contact
+  | _ => Types.Home
   };
 
 type state = {menuOpen: bool};
@@ -37,13 +32,14 @@ let make = (~serverUrl: option(ReasonReactRouter.url)) => {
 
   <>
     <UrlProvider value=(url)>
-      <Header />
+      <Header toggleMenu=toggleMenu />
       <main className="sio__main">
-      <Name visible=(route == Home) />
-      <About visible=(route == About) />
-      <Contact visible=(route == Contact) />
+      <Name visible=(route == Types.Home) />
+      <About visible=(route == Types.About) />
+      <Contact visible=(route == Types.Contact) />
       </main>
-      <Footer />
+      <Footer route=route menuOpen=menuOpen />
+      <Burger menuOpen=menuOpen toggleMenu=toggleMenu />
     </UrlProvider>
   </>;
 };
