@@ -1,12 +1,15 @@
 let isValidEmail = s =>
   switch (s) {
-  | Some(s) => s == "foobar"
+  | Some(s) => switch (Js.String.match([%re "/[^@]+@[^\.]+\..+/"], s)) {
   | None => false
+  | _ => true
+  }
+  | None => true
   };
 let isValidMessage = s =>
   switch (s) {
   | Some(s) => Js.String.length(s) > 0
-  | None => false
+  | None => true
   };
 
 let validator = values => {
@@ -38,7 +41,7 @@ let make = (~visible: bool) => {
         <input
           className=(
             switch (emailError) {
-            | Some("bad") => "sio__email sio__email--invalid"
+            | Some("bad") => "sio__email input-error"
             | _ => "sio__email"
             }
           )
@@ -58,7 +61,7 @@ let make = (~visible: bool) => {
         <textarea
           className=(
             switch (messageError) {
-            | Some("bad") => "sio__message sio__message--invalid"
+            | Some("bad") => "sio__message input-error"
             | _ => "sio__message"
             }
           )
