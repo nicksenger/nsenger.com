@@ -1,9 +1,10 @@
 let isValidEmail = s =>
   switch (s) {
-  | Some(s) => switch (Js.String.match([%re "/[^@]+@[^\.]+\..+/"], s)) {
-  | None => false
-  | _ => true
-  }
+  | Some(s) =>
+    switch (Js.String.match([%re "/[^@]+@[^\\.]+\\..+/"], s)) {
+    | None => false
+    | _ => true
+    }
   | None => true
   };
 let isValidMessage = s =>
@@ -28,9 +29,11 @@ let isOk = (s: option(string)) =>
   };
 
 [@react.component]
-let make = (~visible: bool) => {
+let make = (~visible: bool, ~onSubmit) => {
   let (values, errors, handleChange, _, _) =
     Hooks.useForm(Js.Dict.empty(), validator);
+  let email = Js.Dict.get(values, "email");
+  let message = Js.Dict.get(values, "message");
   let emailError = Js.Dict.get(errors, "email");
   let messageError = Js.Dict.get(errors, "message");
   <section
@@ -49,7 +52,7 @@ let make = (~visible: bool) => {
           type_="email"
           onChange=handleChange
           value=(
-            switch (Js.Dict.get(values, "email")) {
+            switch (email) {
             | Some(s) => s
             | None => ""
             }
@@ -68,7 +71,7 @@ let make = (~visible: bool) => {
           name="message"
           onChange=handleChange
           value=(
-            switch (Js.Dict.get(values, "message")) {
+            switch (message) {
             | Some(s) => s
             | None => ""
             }
@@ -77,7 +80,20 @@ let make = (~visible: bool) => {
       </label>
       <button
         className="sio__submit-btn"
-        disabled=(! isOk(emailError) || ! isOk(messageError))>
+        disabled=(! isOk(emailError) || ! isOk(messageError))
+        onClick=(
+          e => {
+            ReactEvent.Mouse.preventDefault(e);
+            switch (email) {
+            | Some(email) =>
+              switch (message) {
+              | Some(message) => onSubmit(email, message)
+              | None => ()
+              }
+            | None => ()
+            }
+          }
+        )>
         (React.string("SUBMIT"))
       </button>
     </form>

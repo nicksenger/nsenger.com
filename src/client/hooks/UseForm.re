@@ -10,7 +10,7 @@ let getFormStateReducer =
       validateOnChange,
       validateOnBlur,
       state: formState('a),
-      action: Types.formActions,
+      action: Types.formAction,
     ) =>
   switch (action) {
   | Types.Blur(name) =>

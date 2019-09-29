@@ -16,7 +16,8 @@
   "namespace": true,
   "bs-dependencies": [
     "reason-react",
-    "bs-express"
+    "bs-express",
+    "wonka"
   ],
   "refmt": 3
 }

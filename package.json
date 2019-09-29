@@ -8,7 +8,7 @@
     "watch": "run-p watch:*",
     "watch:bs": "bsb -make-world -w",
     "watch:client": "webpack -w --mode development",
-    "watch:server": "nodemon src/server.bs.js",
+    "watch:server": "nodemon src/Server.bs.js",
     "clean": "bsb -clean-world",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,7 +21,8 @@
     "bs-express": "^0.12.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "reason-react": ">=0.4.0"
+    "reason-react": ">=0.4.0",
+    "wonka": "^3.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^9.6.1",
