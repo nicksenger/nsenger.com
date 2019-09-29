@@ -1,15 +1,82 @@
+let isValidEmail = s =>
+  switch (s) {
+  | Some(s) => s == "foobar"
+  | None => false
+  };
+let isValidMessage = s =>
+  switch (s) {
+  | Some(s) => Js.String.length(s) > 0
+  | None => false
+  };
+
+let validator = values => {
+  let d = Js.Dict.empty();
+  isValidEmail(Js.Dict.get(values, "email")) ?
+    Js.Dict.set(d, "email", "ok") : Js.Dict.set(d, "email", "bad");
+  isValidMessage(Js.Dict.get(values, "message")) ?
+    Js.Dict.set(d, "message", "ok") : Js.Dict.set(d, "message", "bad");
+  d;
+};
+
+let isOk = (s: option(string)) =>
+  switch (s) {
+  | Some(s) => s == "ok"
+  | None => false
+  };
+
 [@react.component]
-let make = (~visible: bool) =>
+let make = (~visible: bool) => {
+  let (values, errors, handleChange, _, _) =
+    Hooks.useForm(Js.Dict.empty(), validator);
+  let emailError = Js.Dict.get(errors, "email");
+  let messageError = Js.Dict.get(errors, "message");
   <section
     className=(visible ? "sio__contact" : "sio__contact sio__contact--hidden")>
     <form>
-      <label> (React.string("Return Email")) <input type_="email" /> </label>
+      <label>
+        (React.string("Return Email"))
+        <input
+          className=(
+            switch (emailError) {
+            | Some("bad") => "sio__email sio__email--invalid"
+            | _ => "sio__email"
+            }
+          )
+          name="email"
+          type_="email"
+          onChange=handleChange
+          value=(
+            switch (Js.Dict.get(values, "email")) {
+            | Some(s) => s
+            | None => ""
+            }
+          )
+        />
+      </label>
       <label>
         (React.string("Message"))
-        <textarea className="sio__message" />
+        <textarea
+          className=(
+            switch (messageError) {
+            | Some("bad") => "sio__message sio__message--invalid"
+            | _ => "sio__message"
+            }
+          )
+          name="message"
+          onChange=handleChange
+          value=(
+            switch (Js.Dict.get(values, "message")) {
+            | Some(s) => s
+            | None => ""
+            }
+          )
+        />
       </label>
-      <button className="sio__submit-btn" disabled=true>
+      <button
+        className="sio__submit-btn"
+        disabled=(! isOk(emailError) || ! isOk(messageError))>
         (React.string("SUBMIT"))
       </button>
     </form>
   </section>;
+};
