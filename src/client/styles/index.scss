@@ -251,11 +251,11 @@
   height: 100%;
   background-color: rgba(255, 255, 255, 0.8);
   opacity: 1;
+  transition: opacity 0.5s ease;
 }
 
 .sio__loader--hidden {
   pointer-events: none;
-  background-color: rgba(255, 255, 255, 0);
   opacity: 0;
 }
 
@@ -264,6 +264,16 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.sio__checkmark {
+  color: $green;
+  display: inline-block;
+}
+
+.sio__xmark {
+  color: $red;
+  display: inline-block;
 }
 
 @keyframes background-fade {

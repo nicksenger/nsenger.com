@@ -8,7 +8,7 @@
     "watch": "run-p watch:*",
     "watch:bs": "bsb -make-world -w",
     "watch:client": "webpack -w --mode development",
-    "watch:server": "nodemon src/Server.bs.js",
+    "watch:server": "nodemon -r dotenv/config src/Server.bs.js",
     "clean": "bsb -clean-world",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +18,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@piq9117/bs-mailgun": "^3.0.0-beta",
+    "@ryb73/bs-body-parser": "0.0.8",
     "bs-express": "^0.12.1",
+    "bs-fetch": "^0.5.0",
+    "dotenv": "^8.1.0",
+    "i": "^0.3.6",
+    "npm": "^6.11.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "reason-react": ">=0.4.0",

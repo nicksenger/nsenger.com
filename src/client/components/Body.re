@@ -20,20 +20,34 @@ let menuReducer = (state, action) =>
     }
   };
 
-let submissionReducer: (Types.submissionState, Types.submissionAction) => Types.submissionState =
+let submissionReducer:
+  (Types.submissionState, Types.submissionAction) => Types.submissionState =
   (state, action) =>
     switch (action) {
-    | Types.SubmitMessageRequest(_email, _message) => {loading: true, message: state.message}
+    | Types.SubmitMessageRequest(_email, _message) => {
+        loading: true,
+        message: state.message,
+        status: state.status,
+      }
     | Types.SubmitMessageSuccess => {
         loading: false,
         message:
           Some(
             "Thank you for your submission, I'll respond as soon as possible!",
           ),
+        status: Types.Success,
       }
-    | Types.SubmitMessageFailure(e) => {loading: false, message: Some(e)}
+    | Types.SubmitMessageFailure(e) => {
+        loading: false,
+        message: Some(e),
+        status: Types.Failed,
+      }
     };
-let initialSubmissionState: Types.submissionState = {loading: false, message: None};
+let initialSubmissionState: Types.submissionState = {
+  loading: false,
+  message: None,
+  status: Types.Pending,
+};
 
 [@react.component]
 let make = (~serverUrl: option(ReasonReactRouter.url)) => {
@@ -45,7 +59,8 @@ let make = (~serverUrl: option(ReasonReactRouter.url)) => {
       Epics.rootEpic,
       initialSubmissionState,
     );
-  let submit = (e, m) => submissionDispatch(Types.SubmitMessageRequest(e, m))
+  let submit = (e, m) =>
+    submissionDispatch(Types.SubmitMessageRequest(e, m));
   let toggleMenu = () => menuDispatch(ToggleMenu);
   let url =
     switch (serverUrl) {
@@ -60,7 +75,11 @@ let make = (~serverUrl: option(ReasonReactRouter.url)) => {
       <main className="sio__main">
         <Name visible=(route == Types.Home) />
         <About visible=(route == Types.About) />
-        <Contact visible=(route == Types.Contact) onSubmit=submit />
+        <Contact
+          visible=(route == Types.Contact)
+          onSubmit=submit
+          status=submissionState.status
+        />
       </main>
       <Burger menuOpen toggleMenu />
       <Footer route menuOpen />

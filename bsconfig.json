@@ -17,7 +17,10 @@
   "bs-dependencies": [
     "reason-react",
     "bs-express",
-    "wonka"
+    "wonka",
+    "bs-fetch",
+    "@piq9117/bs-mailgun",
+    "@ryb73/bs-body-parser"
   ],
   "refmt": 3
 }

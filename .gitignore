@@ -7,3 +7,4 @@ npm-debug.log
 .vscode
 *.js
 /src/client/dist/
+.env

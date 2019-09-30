@@ -1,19 +1,17 @@
-[@bs.config {jsx: 3}];
-
-/* make the express app */
 let app = Express.App.make();
-
-/* Our initial rendering function, we will soon make this way better */
+Express.App.use(app, BodyParser.json());
 let renderHTML = (_next, req, res) => {
   let url: ReasonReactRouter.url = {
-    path: List.filter(
-      (s => s != ""),
-      Array.to_list(Js.String.split("/", Express.Request.path(req)))
-    ),
+    path:
+      List.filter(
+        s => s != "",
+        Array.to_list(Js.String.split("/", Express.Request.path(req))),
+      ),
     hash: "",
-    search: ""
-  }
-  let content = ReactDOMServerRe.renderToString(<Body serverUrl=Some(url) />);
+    search: "",
+  };
+  let content =
+    ReactDOMServerRe.renderToString(<Body serverUrl=(Some(url)) />);
   Express.Response.sendString(
     {j|
       <!DOCTYPE html>
@@ -47,13 +45,13 @@ Express.Static.defaultOptions()
 |> Express.Static.asMiddleware
 |> Express.App.useOnPath(app, ~path="/static");
 
-/* Express works on middleware and bs-express provides an easy way to make
-   middleware out of functions */
+Endpoints.sendMessage
+  |> Express.PromiseMiddleware.from
+  |> Express.App.useOnPath(~path="/send-message", app);
+
 renderHTML |> Express.Middleware.from |> Express.App.useOnPath(~path="/", app);
 
 let port = 3000;
-
-/* Getting a nice message when the server starts */
 let onListen = e =>
   switch (e) {
   | exception (Js.Exn.Error(e)) =>
@@ -62,5 +60,4 @@ let onListen = e =>
   | _ => Js.log("listening at localhost:" ++ string_of_int(port))
   };
 
-/* starting up the express app */
 Express.App.listen(app, ~onListen, ~port, ());

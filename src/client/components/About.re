@@ -9,7 +9,7 @@ let make = (~visible: bool) =>
              web & native applications using modern techniques. Some of my interests include:
              biotech, foreign language study, functional programming, and homebrewing.
              If you need technical assistance developing an app or project, feel free
-             to reach out|j},
+             to reach out |j},
         )
       )
       <span className="sio__small-only"> (React.string(".")) </span>
