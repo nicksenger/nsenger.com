@@ -19,7 +19,6 @@
   "license": "MIT",
   "dependencies": {
     "@piq9117/bs-mailgun": "^3.0.0-beta",
-    "@ryb73/bs-body-parser": "0.0.8",
     "bs-express": "^0.12.1",
     "bs-fetch": "^0.5.0",
     "dotenv": "^8.1.0",

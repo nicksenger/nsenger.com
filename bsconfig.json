@@ -19,8 +19,7 @@
     "bs-express",
     "wonka",
     "bs-fetch",
-    "@piq9117/bs-mailgun",
-    "@ryb73/bs-body-parser"
+    "@piq9117/bs-mailgun"
   ],
   "refmt": 3
 }

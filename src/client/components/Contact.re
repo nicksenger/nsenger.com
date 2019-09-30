@@ -42,7 +42,22 @@ let make = (~visible: bool, ~onSubmit, ~status) => {
       switch (status) {
       | Types.Pending =>
         <>
-          <form>
+          <form
+            action="/send-message-no-js"
+            method="post"
+            onSubmit=(
+              e => {
+                ReactEvent.Form.preventDefault(e);
+                switch (email) {
+                | Some(email) =>
+                  switch (message) {
+                  | Some(message) => onSubmit(email, message)
+                  | None => ()
+                  }
+                | None => ()
+                };
+              }
+            )>
             <label>
               (React.string("Return Email"))
               <input
@@ -84,20 +99,7 @@ let make = (~visible: bool, ~onSubmit, ~status) => {
             </label>
             <button
               className="sio__submit-btn"
-              disabled=(! isOk(emailError) || ! isOk(messageError))
-              onClick=(
-                e => {
-                  ReactEvent.Mouse.preventDefault(e);
-                  switch (email) {
-                  | Some(email) =>
-                    switch (message) {
-                    | Some(message) => onSubmit(email, message)
-                    | None => ()
-                    }
-                  | None => ()
-                  };
-                }
-              )>
+              disabled=(! isOk(emailError) || ! isOk(messageError))>
               (React.string("SUBMIT"))
             </button>
           </form>

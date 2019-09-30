@@ -1,5 +1,6 @@
 let app = Express.App.make();
 Express.App.use(app, BodyParser.json());
+Express.App.use(app, BodyParser.urlencoded((), ~extended=true));
 let renderHTML = (_next, req, res) => {
   let url: ReasonReactRouter.url = {
     path:
@@ -44,6 +45,10 @@ Express.Static.defaultOptions()
 |> Express.Static.make("src/client/dist/")
 |> Express.Static.asMiddleware
 |> Express.App.useOnPath(app, ~path="/static");
+
+Endpoints.sendMessageNoJs
+  |> Express.PromiseMiddleware.from
+  |> Express.App.useOnPath(~path="/send-message-no-js", app);
 
 Endpoints.sendMessage
   |> Express.PromiseMiddleware.from

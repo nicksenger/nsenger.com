@@ -43,6 +43,51 @@ let getDictString = (dict, key) =>
   | _ => None
   };
 
+let sendMessageNoJs = (_next, req, res) =>
+  switch (Express.Request.httpMethod(req)) {
+  | Express.Request.Post =>
+    let body = Express.Request.bodyJSON(req);
+    switch (body) {
+    | Some(bj) =>
+      switch (Js.Json.decodeObject(bj)) {
+      | Some(b) =>
+        let e = Js.Dict.get(b, "email");
+        let m = Js.Dict.get(b, "message");
+        switch (e) {
+        | Some(_) =>
+          switch (m) {
+          | Some(_) =>
+            sendMail(e, m)
+            |> Js.Promise.then_(_ =>
+                  res
+                  |> Express.Response.redirect("/contact?success=true")
+                  |> Js.Promise.resolve
+                )
+          | _ => badRequest(res)
+          }
+        | _ => badRequest(res)
+        };
+      | _ => badRequest(res)
+      }
+    | _ => badRequest(res)
+    };
+  | Express.Request.Get => {
+    let params = Express.Request.params(req);
+    Js.log(params);
+    res
+    |> Express.Response.sendStatus(
+          Express.Response.StatusCode.MethodNotAllowed,
+        )
+    |> Js.Promise.resolve
+  }
+  | _ =>
+    res
+    |> Express.Response.sendStatus(
+          Express.Response.StatusCode.MethodNotAllowed,
+        )
+    |> Js.Promise.resolve
+  };
+
 let sendMessage = (_next, req, res) =>
   switch (Express.Request.httpMethod(req)) {
   | Express.Request.Post =>
@@ -71,6 +116,15 @@ let sendMessage = (_next, req, res) =>
       }
     | _ => badRequest(res)
     };
+  | Express.Request.Get => {
+    let params = Express.Request.params(req);
+    Js.log(params);
+    res
+    |> Express.Response.sendStatus(
+         Express.Response.StatusCode.MethodNotAllowed,
+       )
+    |> Js.Promise.resolve
+  }
   | _ =>
     res
     |> Express.Response.sendStatus(
