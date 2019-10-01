@@ -19,12 +19,10 @@ type submissionStatus =
   | Failed;
 
 type submissionState = {
-  loading: bool,
-  message: option(string),
-  status: submissionStatus
+  loading: bool
 };
 
 type submissionAction =
   | SubmitMessageRequest(string, string)
   | SubmitMessageSuccess
-  | SubmitMessageFailure(string);
+  | SubmitMessageFailure;

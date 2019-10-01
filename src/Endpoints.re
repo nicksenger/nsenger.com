@@ -37,98 +37,82 @@ let badRequest = res =>
   |> Express.Response.sendStatus(Express.Response.StatusCode.BadRequest)
   |> Js.Promise.resolve;
 
+let methodNotAllowed = res =>
+  res
+  |> Express.Response.sendStatus(
+       Express.Response.StatusCode.MethodNotAllowed,
+     )
+  |> Js.Promise.resolve;
+
 let getDictString = (dict, key) =>
   switch (Js.Dict.get(dict, key)) {
   | Some(json) => Js.Json.decodeString(json)
   | _ => None
   };
 
+let parseBody = body =>
+  switch (body) {
+  | Some(bj) =>
+    switch (Js.Json.decodeObject(bj)) {
+    | Some(b) =>
+      let e = Js.Dict.get(b, "email");
+      let m = Js.Dict.get(b, "message");
+      switch (e) {
+      | Some(_) =>
+        switch (m) {
+        | Some(_) => Some((e, m))
+        | _ => None
+        }
+      | _ => None
+      };
+    | _ => None
+    }
+  | _ => None
+  };
+
+let redirect = (res, success) =>
+  res
+  |> Express.Response.redirect({j|/contact?success=$success|j})
+  |> Js.Promise.resolve;
+
 let sendMessageNoJs = (_next, req, res) =>
   switch (Express.Request.httpMethod(req)) {
   | Express.Request.Post =>
     let body = Express.Request.bodyJSON(req);
-    switch (body) {
-    | Some(bj) =>
-      switch (Js.Json.decodeObject(bj)) {
-      | Some(b) =>
-        let e = Js.Dict.get(b, "email");
-        let m = Js.Dict.get(b, "message");
-        switch (e) {
-        | Some(_) =>
-          switch (m) {
-          | Some(_) =>
-            sendMail(e, m)
-            |> Js.Promise.then_(_ =>
-                  res
-                  |> Express.Response.redirect("/contact?success=true")
-                  |> Js.Promise.resolve
-                )
-          | _ => badRequest(res)
-          }
-        | _ => badRequest(res)
-        };
-      | _ => badRequest(res)
+    switch (parseBody(body)) {
+    | Some((e, m)) =>
+      switch (e) {
+      | Some(s) =>
+        switch (Contact.isValidEmail(Js.Json.decodeString(s))) {
+        | false => redirect(res, "false")
+        | _ => switch(m) {
+        | Some(message) => switch (Contact.isValidMessage(Js.Json.decodeString(message))) {
+        | true => sendMail(e, m) |> Js.Promise.then_(_ => redirect(res, "true"))
+        | _ => redirect(res, "false")
+        }
+        | _ => redirect(res, "false")
+        }
+        }
+      | _ => redirect(res, "false")
       }
-    | _ => badRequest(res)
+    | None => redirect(res, "false")
     };
-  | Express.Request.Get => {
-    let params = Express.Request.params(req);
-    Js.log(params);
-    res
-    |> Express.Response.sendStatus(
-          Express.Response.StatusCode.MethodNotAllowed,
-        )
-    |> Js.Promise.resolve
-  }
-  | _ =>
-    res
-    |> Express.Response.sendStatus(
-          Express.Response.StatusCode.MethodNotAllowed,
-        )
-    |> Js.Promise.resolve
+  | _ => redirect(res, "false")
   };
 
 let sendMessage = (_next, req, res) =>
   switch (Express.Request.httpMethod(req)) {
   | Express.Request.Post =>
     let body = Express.Request.bodyJSON(req);
-    switch (body) {
-    | Some(bj) =>
-      switch (Js.Json.decodeObject(bj)) {
-      | Some(b) =>
-        let e = Js.Dict.get(b, "email");
-        let m = Js.Dict.get(b, "message");
-        switch (e) {
-        | Some(_) =>
-          switch (m) {
-          | Some(_) =>
-            sendMail(e, m)
-            |> Js.Promise.then_(responseMessage =>
-                 res
-                 |> Express.Response.sendJson(responseMessage)
-                 |> Js.Promise.resolve
-               )
-          | _ => badRequest(res)
-          }
-        | _ => badRequest(res)
-        };
-      | _ => badRequest(res)
-      }
-    | _ => badRequest(res)
+    switch (parseBody(body)) {
+    | Some((e, m)) =>
+      sendMail(e, m)
+      |> Js.Promise.then_(responseMessage =>
+           res
+           |> Express.Response.sendJson(responseMessage)
+           |> Js.Promise.resolve
+         )
+    | None => badRequest(res)
     };
-  | Express.Request.Get => {
-    let params = Express.Request.params(req);
-    Js.log(params);
-    res
-    |> Express.Response.sendStatus(
-         Express.Response.StatusCode.MethodNotAllowed,
-       )
-    |> Js.Promise.resolve
-  }
-  | _ =>
-    res
-    |> Express.Response.sendStatus(
-         Express.Response.StatusCode.MethodNotAllowed,
-       )
-    |> Js.Promise.resolve
+  | _ => methodNotAllowed(res)
   };

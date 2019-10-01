@@ -1,9 +1,3 @@
-let logLatestState =
-  (. (a: Types.submissionAction, s: Types.submissionState)) => {
-    Js.log(s);
-    (a, s);
-  };
-
 let combineEpics: list(Wonka.Types.sourceT('a)) => Wonka.Types.sourceT('a) =
   actionStreams => {
     let {Wonka.Types.source, Wonka.Types.next} = Wonka.makeSubject();
@@ -52,12 +46,29 @@ let submitMessageEpic = (actionStream, _stateStream) =>
          |> Wonka.map((. r) =>
               switch (Fetch.Response.status(r)) {
               | 200 => Types.SubmitMessageSuccess
-              | _ => Types.SubmitMessageFailure("failed!")
+              | _ => Types.SubmitMessageFailure
               }
             );
        | _ => Wonka.fromList([])
        }
      );
 
+let submitMessageCompletionEpic = (actionStream, _stateStream) =>
+  actionStream
+  |> Wonka.filter((. a) =>
+       switch (a) {
+       | Types.SubmitMessageSuccess =>
+         ReasonReactRouter.push("/contact?success=true");
+         false;
+       | Types.SubmitMessageFailure =>
+         ReasonReactRouter.push("/contact?success=false");
+         false;
+       | _ => false
+       }
+     );
+
 let rootEpic = (actionStream, stateStream) =>
-  combineEpics([submitMessageEpic(actionStream, stateStream)]);
+  combineEpics([
+    submitMessageEpic(actionStream, stateStream),
+    submitMessageCompletionEpic(actionStream, stateStream),
+  ]);

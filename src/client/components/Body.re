@@ -7,6 +7,13 @@ let mapUrlToRoute = (url: ReasonReact.Router.url) =>
   | _ => Types.Home
   };
 
+let mapUrlToSubmissionState = (url: ReasonReact.Router.url) =>
+  switch (url.search) {
+  | "success=true" => Types.Success
+  | "success=false" => Types.Failed
+  | _ => Types.Pending
+  }
+
 type menuState = {menuOpen: bool};
 type menuAction =
   | ToggleMenu;
@@ -22,31 +29,21 @@ let menuReducer = (state, action) =>
 
 let submissionReducer:
   (Types.submissionState, Types.submissionAction) => Types.submissionState =
-  (state, action) =>
+  (_, action) =>
     switch (action) {
     | Types.SubmitMessageRequest(_email, _message) => {
         loading: true,
-        message: state.message,
-        status: state.status,
       }
     | Types.SubmitMessageSuccess => {
         loading: false,
-        message:
-          Some(
-            "Thank you for your submission, I'll respond as soon as possible!",
-          ),
-        status: Types.Success,
       }
-    | Types.SubmitMessageFailure(e) => {
+    | Types.SubmitMessageFailure => {
         loading: false,
-        message: Some(e),
-        status: Types.Failed,
       }
     };
+
 let initialSubmissionState: Types.submissionState = {
   loading: false,
-  message: None,
-  status: Types.Pending,
 };
 
 [@react.component]
@@ -68,6 +65,8 @@ let make = (~serverUrl: option(ReasonReactRouter.url)) => {
     | None => ReasonReactRouter.useUrl()
     };
   let route = mapUrlToRoute(url);
+  let submissionStatus = mapUrlToSubmissionState(url);
+  
 
   <>
     <UrlProvider value=url>
@@ -78,7 +77,7 @@ let make = (~serverUrl: option(ReasonReactRouter.url)) => {
         <Contact
           visible=(route == Types.Contact)
           onSubmit=submit
-          status=submissionState.status
+          status=submissionStatus
         />
       </main>
       <Burger menuOpen toggleMenu />

@@ -9,7 +9,20 @@ let renderHTML = (_next, req, res) => {
         Array.to_list(Js.String.split("/", Express.Request.path(req))),
       ),
     hash: "",
-    search: "",
+    search:
+      switch (Js.Dict.get(Express.Request.query(req), "success")) {
+      | Some(v) =>
+        switch (Js.Json.decodeString(v)) {
+        | Some(s) =>
+          switch (s) {
+          | "true" => "success=true"
+          | "false" => "success=false"
+          | _ => ""
+          }
+        | _ => ""
+        }
+      | _ => ""
+      },
   };
   let content =
     ReactDOMServerRe.renderToString(<Body serverUrl=(Some(url)) />);
@@ -47,12 +60,12 @@ Express.Static.defaultOptions()
 |> Express.App.useOnPath(app, ~path="/static");
 
 Endpoints.sendMessageNoJs
-  |> Express.PromiseMiddleware.from
-  |> Express.App.useOnPath(~path="/send-message-no-js", app);
+|> Express.PromiseMiddleware.from
+|> Express.App.useOnPath(~path="/send-message-no-js", app);
 
 Endpoints.sendMessage
-  |> Express.PromiseMiddleware.from
-  |> Express.App.useOnPath(~path="/send-message", app);
+|> Express.PromiseMiddleware.from
+|> Express.App.useOnPath(~path="/send-message", app);
 
 renderHTML |> Express.Middleware.from |> Express.App.useOnPath(~path="/", app);
 
