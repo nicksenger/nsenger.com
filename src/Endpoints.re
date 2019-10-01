@@ -85,13 +85,16 @@ let sendMessageNoJs = (_next, req, res) =>
       | Some(s) =>
         switch (Contact.isValidEmail(Js.Json.decodeString(s))) {
         | false => redirect(res, "false")
-        | _ => switch(m) {
-        | Some(message) => switch (Contact.isValidMessage(Js.Json.decodeString(message))) {
-        | true => sendMail(e, m) |> Js.Promise.then_(_ => redirect(res, "true"))
-        | _ => redirect(res, "false")
-        }
-        | _ => redirect(res, "false")
-        }
+        | _ =>
+          switch (m) {
+          | Some(message) =>
+            switch (Contact.isValidMessage(Js.Json.decodeString(message))) {
+            | true =>
+              sendMail(e, m) |> Js.Promise.then_(_ => redirect(res, "true"))
+            | _ => redirect(res, "false")
+            }
+          | _ => redirect(res, "false")
+          }
         }
       | _ => redirect(res, "false")
       }

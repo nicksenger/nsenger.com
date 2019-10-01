@@ -10,7 +10,7 @@
     "watch:client": "webpack -w --mode development",
     "watch:server": "nodemon -r dotenv/config src/Server.bs.js",
     "clean": "bsb -clean-world",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "bsb -make-world && jest"
   },
   "keywords": [
     "BuckleScript"
@@ -22,8 +22,6 @@
     "bs-express": "^0.12.1",
     "bs-fetch": "^0.5.0",
     "dotenv": "^8.1.0",
-    "i": "^0.3.6",
-    "npm": "^6.11.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "reason-react": ">=0.4.0",
@@ -31,7 +29,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.6.1",
+    "bs-jest": "^0.3.2",
     "bs-platform": "^5.0.6",
+    "bs-react-testing-library": "^0.6.0",
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
     "extract-loader": "^3.1.0",
