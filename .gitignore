@@ -5,6 +5,7 @@ npm-debug.log
 /lib/bs/
 /node_modules/
 .vscode
-*.js
+/src/**/*.js
+/test/**/*.js
 /src/client/dist/
 .env

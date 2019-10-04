@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`About renders not visible 1`] = `
+<div>
+  <section
+    class="sio__about sio__about--hidden"
+  >
+    <p>
+      I am a software engineer with several years of experience building scalable
+             web & native applications using modern techniques. Some of my interests include:
+             biotech, foreign language study, functional programming, and homebrewing.
+             If you need technical assistance developing an app or project, feel free
+             to reach out 
+      <span
+        class="sio__small-only"
+      >
+        .
+      </span>
+      <span
+        class="sio__big-only"
+      >
+         using the form below:
+      </span>
+    </p>
+  </section>
+</div>
+`;
+
+exports[`About renders visible 1`] = `
+<div>
+  <section
+    class="sio__about"
+  >
+    <p>
+      I am a software engineer with several years of experience building scalable
+             web & native applications using modern techniques. Some of my interests include:
+             biotech, foreign language study, functional programming, and homebrewing.
+             If you need technical assistance developing an app or project, feel free
+             to reach out 
+      <span
+        class="sio__small-only"
+      >
+        .
+      </span>
+      <span
+        class="sio__big-only"
+      >
+         using the form below:
+      </span>
+    </p>
+  </section>
+</div>
+`;

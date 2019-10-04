@@ -28,8 +28,10 @@
     "wonka": "^3.2.1"
   },
   "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.9",
     "autoprefixer": "^9.6.1",
-    "bs-jest": "^0.3.2",
+    "bs-dom-testing-library": "^0.5.1",
+    "bs-jest-dom": "^2.0.1",
     "bs-platform": "^5.0.6",
     "bs-react-testing-library": "^0.6.0",
     "css-loader": "^3.2.0",
@@ -44,5 +46,10 @@
     "sass-loader": "^8.0.0",
     "webpack": "^4.0.1",
     "webpack-cli": "^3.1.1"
+  },
+  "jest": {
+    "testURL": "http://localhost/",
+    "testEnvironment": "jsdom",
+    "testRegex": "(/test/.*(Spec))\\.bs\\.js$"
   }
 }

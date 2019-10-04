@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader renders when hidden 1`] = `
+<div>
+  <div
+    class="sio__loader sio__loader--hidden"
+  >
+    <div
+      class="sio__spinner"
+    >
+      <div
+        class="iching__container"
+        style="height: 40px; width: 50px;"
+      >
+        <svg
+          class="iching__svg"
+          viewBox="0 0 15 12"
+        >
+          <g>
+            <path
+              d="M1,1 L7,1"
+            />
+            <path
+              d="M8,1 L14,1"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,3 L5,3"
+            />
+            <path
+              d="M10,3 L14,3"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,5 L7,5"
+            />
+            <path
+              d="M8,5 L14,5"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,7 L5,7"
+            />
+            <path
+              d="M10,7 L14,7"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,9 L5,9"
+            />
+            <path
+              d="M10,9 L14,9"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,11 L7,11"
+            />
+            <path
+              d="M8,11 L14,11"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Loader renders when visible 1`] = `
+<div>
+  <div
+    class="sio__loader"
+  >
+    <div
+      class="sio__spinner"
+    >
+      <div
+        class="iching__container"
+        style="height: 40px; width: 50px;"
+      >
+        <svg
+          class="iching__svg"
+          viewBox="0 0 15 12"
+        >
+          <g>
+            <path
+              d="M1,1 L5,1"
+            />
+            <path
+              d="M10,1 L14,1"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,3 L5,3"
+            />
+            <path
+              d="M10,3 L14,3"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,5 L7,5"
+            />
+            <path
+              d="M8,5 L14,5"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,7 L7,7"
+            />
+            <path
+              d="M8,7 L14,7"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,9 L5,9"
+            />
+            <path
+              d="M10,9 L14,9"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,11 L7,11"
+            />
+            <path
+              d="M8,11 L14,11"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+`;

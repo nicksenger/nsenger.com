@@ -8,7 +8,8 @@
     "dir" : "src",
     "subdirs" : true
   }, {
-    "dir": "__tests__",
+    "dir": "test",
+    "subdirs": true,
     "type": "dev"
   }],
   "package-specs": [{
@@ -23,8 +24,10 @@
     "wonka",
     "bs-fetch",
     "@piq9117/bs-mailgun",
-    "bs-jest",
-    "bs-react-testing-library"
+    "@glennsl/bs-jest",
+    "bs-react-testing-library",
+    "bs-dom-testing-library",
+    "bs-jest-dom"
   ],
   "refmt": 3
 }
