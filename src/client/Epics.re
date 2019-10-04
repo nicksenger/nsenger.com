@@ -1,11 +1,13 @@
-let combineEpics: list(Wonka.Types.sourceT('a)) => Wonka.Types.sourceT('a) =
+module WT = Wonka.Types;
+
+let combineEpics: list(WT.sourceT('a)) => WT.sourceT('a) =
   actionStreams => {
-    let {Wonka.Types.source, Wonka.Types.next} = Wonka.makeSubject();
+    let {WT.source, WT.next} = Wonka.makeSubject();
     List.iter(
       s =>
         s((. a) =>
           switch (a) {
-          | Wonka.Types.Push(a) => next(a)
+          | WT.Push(a) => next(a)
           | _ => ()
           }
         ),
@@ -53,15 +55,15 @@ let submitMessageEpic = (actionStream, _stateStream) =>
        }
      );
 
-let submitMessageCompletionEpic = (actionStream, _stateStream) =>
+let submitMessageCompletionEpic = (actionStream, _stateStream, push) =>
   actionStream
   |> Wonka.filter((. a) =>
        switch (a) {
        | Types.SubmitMessageSuccess =>
-         ReasonReactRouter.push("/contact?success=true");
+         push("/contact?success=true");
          false;
        | Types.SubmitMessageFailure =>
-         ReasonReactRouter.push("/contact?success=false");
+         push("/contact?success=false");
          false;
        | _ => false
        }
@@ -70,5 +72,9 @@ let submitMessageCompletionEpic = (actionStream, _stateStream) =>
 let rootEpic = (actionStream, stateStream) =>
   combineEpics([
     submitMessageEpic(actionStream, stateStream),
-    submitMessageCompletionEpic(actionStream, stateStream),
+    submitMessageCompletionEpic(
+      actionStream,
+      stateStream,
+      ReasonReactRouter.push,
+    ),
   ]);
