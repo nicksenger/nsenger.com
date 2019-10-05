@@ -1,21 +1,5 @@
 module WT = Wonka.Types;
 
-let combineEpics: list(WT.sourceT('a)) => WT.sourceT('a) =
-  actionStreams => {
-    let {WT.source, WT.next} = Wonka.makeSubject();
-    List.iter(
-      s =>
-        s((. a) =>
-          switch (a) {
-          | WT.Push(a) => next(a)
-          | _ => ()
-          }
-        ),
-      actionStreams,
-    );
-    source;
-  };
-
 let submitMessageEpic = (actionStream, fetch, status) =>
   actionStream
   |> Wonka.filter((. a) =>
@@ -70,7 +54,7 @@ let submitMessageCompletionEpic = (actionStream, push) =>
      );
 
 let rootEpic = (actionStream, _stateStream) =>
-  combineEpics([
+  UseEpicReducer.combineEpics([
     submitMessageEpic(
       actionStream,
       Fetch.fetchWithInit,

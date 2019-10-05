@@ -26,3 +26,19 @@ let useEpicReducer:
     );
     (state, dispatch);
   };
+
+let combineEpics: list(WT.sourceT('a)) => WT.sourceT('a) =
+  actionStreams => {
+    let {WT.source, WT.next} = Wonka.makeSubject();
+    List.iter(
+      s =>
+        s((. a) =>
+          switch (a) {
+          | WT.Push(a) => next(a)
+          | _ => ()
+          }
+        ),
+      actionStreams,
+    );
+    source;
+  };

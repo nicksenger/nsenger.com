@@ -2,52 +2,6 @@ open Jest;
 open Expect;
 module WT = Wonka.Types;
 
-type combinableAction =
-  | A
-  | B
-  | C;
-
-testAsync("combining epics", finished => {
-  let {WT.source: actionStream, WT.next} = Wonka.makeSubject();
-  let aWatcher =
-    actionStream
-    |> Wonka.filter((. a) =>
-         switch (a) {
-         | A => true
-         | _ => false
-         }
-       )
-    |> Wonka.map((. _) => B);
-  let bWatcher =
-    actionStream
-    |> Wonka.filter((. a) =>
-         switch (a) {
-         | B => true
-         | _ => false
-         }
-       )
-    |> Wonka.map((. _) => C);
-  let cWatcher =
-    actionStream
-    |> Wonka.filter((. a) =>
-         switch (a) {
-         | C =>
-           ignore(1 |> expect |> toEqual(1) |> finished);
-           false;
-         | _ => false
-         }
-       );
-
-  let combined = Epics.combineEpics([aWatcher, bWatcher, cWatcher]);
-  combined((. signal) =>
-    switch (signal) {
-    | WT.Push(a) => next(a)
-    | _ => ()
-    }
-  );
-  next(A);
-});
-
 testAsync("submitting the message should fetch to message URI", finished => {
   let {WT.source: actionStream, WT.next} = Wonka.makeSubject();
   let fetch = (path, _init) =>
