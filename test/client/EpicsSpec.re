@@ -58,6 +58,7 @@ testAsync("the submit message completion", finished => {
     | _ => ()
     };
 
-  Epics.submitMessageCompletionEpic(actionStream, stateStream, push);
+  let epic = Epics.submitMessageCompletionEpic(actionStream, stateStream, push);
+  epic((. _) => ()); /* Streams are lazy, so need something to observe */
   next(Types.SubmitMessageSuccess);
 });
