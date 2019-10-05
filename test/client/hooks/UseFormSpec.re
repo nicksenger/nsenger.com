@@ -15,7 +15,8 @@ testAsync("useForm no errors with empty initial", finished => {
 testAsync("useForm no error when change input to valid", finished => {
   let tree = RT.render(<TestFormComponent />);
   let input = tree |> RT.getByLabelText(~matcher=`Str("INPUT 1"));
-  let options = DT.WaitForElement.makeOptions(~container=input, ());
+  let container = tree |> RT.container;
+  let options = DT.WaitForElement.makeOptions(~container, ());
   ignore(
     DT.waitForElement(
       ~options,
@@ -42,7 +43,8 @@ testAsync("useForm no error when change input to valid", finished => {
 testAsync("useForm error when change first input to invalid", finished => {
   let tree = RT.render(<TestFormComponent />);
   let input = tree |> RT.getByLabelText(~matcher=`Str("INPUT 1"));
-  let options = DT.WaitForElement.makeOptions(~container=input, ());
+  let container = tree |> RT.container;
+  let options = DT.WaitForElement.makeOptions(~container, ());
   ignore(
     DT.waitForElement(
       ~options,
@@ -69,7 +71,8 @@ testAsync("useForm error when change first input to invalid", finished => {
 testAsync("useForm error when change second input to invalid", finished => {
   let tree = RT.render(<TestFormComponent />);
   let input = tree |> RT.getByLabelText(~matcher=`Str("INPUT 2"));
-  let options = DT.WaitForElement.makeOptions(~container=input, ());
+  let container = tree |> RT.container;
+  let options = DT.WaitForElement.makeOptions(~container, ());
   ignore(
     DT.waitForElement(
       ~options,
@@ -98,7 +101,8 @@ testAsync(
   finished => {
   let tree = RT.render(<TestFormComponent validateOnChange=false />);
   let input = tree |> RT.getByLabelText(~matcher=`Str("INPUT 1"));
-  let options = DT.WaitForElement.makeOptions(~container=input, ());
+  let container = tree |> RT.container;
+  let options = DT.WaitForElement.makeOptions(~container, ());
   ignore(
     DT.waitForElement(
       ~options,
@@ -125,7 +129,8 @@ testAsync(
 testAsync("useForm error when blur input if invalid", finished => {
   let tree = RT.render(<TestFormComponent validateOnChange=false />);
   let input = tree |> RT.getByLabelText(~matcher=`Str("INPUT 1"));
-  let options = DT.WaitForElement.makeOptions(~container=input, ());
+  let container = tree |> RT.container;
+  let options = DT.WaitForElement.makeOptions(~container, ());
   ignore(
     DT.waitForElement(
       ~options,
@@ -157,7 +162,8 @@ testAsync(
       <TestFormComponent validateOnChange=false validateOnBlur=false />,
     );
   let input = tree |> RT.getByLabelText(~matcher=`Str("INPUT 1"));
-  let options = DT.WaitForElement.makeOptions(~container=input, ());
+  let container = tree |> RT.container;
+  let options = DT.WaitForElement.makeOptions(~container, ());
   ignore(
     DT.waitForElement(
       ~options,

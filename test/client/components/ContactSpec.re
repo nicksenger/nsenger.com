@@ -45,7 +45,8 @@ testAsync("Contact renders invalid email", finished => {
       <Contact visible=true status=Types.Pending onSubmit=((_, _) => ()) />,
     );
   let input = tree |> RT.getByLabelText(~matcher=`Str("Return Email"));
-  let options = DT.WaitForElement.makeOptions(~container=input, ());
+  let container = tree |> RT.container;
+  let options = DT.WaitForElement.makeOptions(~container, ());
   ignore(
     DT.waitForElement(
       ~options,
@@ -75,7 +76,8 @@ testAsync("Contact renders invalid message", finished => {
       <Contact visible=true status=Types.Pending onSubmit=((_, _) => ()) />,
     );
   let input = tree |> RT.getByLabelText(~matcher=`Str("Message"));
-  let options = DT.WaitForElement.makeOptions(~container=input, ());
+  let container = tree |> RT.container;
+  let options = DT.WaitForElement.makeOptions(~container, ());
   let btnChange = () => tree |> RT.getByText(~matcher=`Str("SUBMIT"));
   ignore(
     DT.waitForElement(~options, ~callback=btnChange, ())
