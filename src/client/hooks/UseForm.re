@@ -4,6 +4,13 @@ type formState('a) = {
   errors: Js.Dict.t('a),
 };
 
+let pickByTouched = (errors, touched) => {
+  Array.fold_right(((k, v), acc) => {
+    Belt.Set.String.has(touched, k) ? Js.Dict.set(acc, k, v) : ignore();
+    acc
+  }, Js.Dict.entries(errors), Js.Dict.empty());
+};
+
 let getFormStateReducer =
     (
       validator,
@@ -15,13 +22,13 @@ let getFormStateReducer =
   switch (action) {
   | Types.Blur(name) =>
     let touched = Belt.Set.String.add(state.touched, name);
-    let errors = validateOnBlur ? validator(state.values) : state.errors;
+    let errors = validateOnBlur ? pickByTouched(validator(state.values), touched) : state.errors;
     let newState = {touched, values: state.values, errors};
     newState;
   | Types.Change(name, value) =>
     let touched = Belt.Set.String.add(state.touched, name);
     Js.Dict.set(state.values, name, value);
-    let errors = validateOnChange ? validator(state.values) : state.errors;
+    let errors = validateOnChange ? pickByTouched(validator(state.values), touched) : state.errors;
     let newState = {touched, values: state.values, errors};
     newState;
   | Types.Validate =>

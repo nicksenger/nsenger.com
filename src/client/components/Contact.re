@@ -16,15 +16,15 @@ let isValidMessage = s =>
 let validator = values => {
   let d = Js.Dict.empty();
   isValidEmail(Js.Dict.get(values, "email")) ?
-    Js.Dict.set(d, "email", "ok") : Js.Dict.set(d, "email", "bad");
+    ignore() : Js.Dict.set(d, "email", "bad");
   isValidMessage(Js.Dict.get(values, "message")) ?
-    Js.Dict.set(d, "message", "ok") : Js.Dict.set(d, "message", "bad");
+    ignore() : Js.Dict.set(d, "message", "bad");
   d;
 };
 
 let isOk = (s: option(string)) =>
   switch (s) {
-  | Some(s) => s == "ok"
+  | Some(_e) => false
   | None => true
   };
 
