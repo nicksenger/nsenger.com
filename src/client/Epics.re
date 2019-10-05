@@ -16,7 +16,7 @@ let combineEpics: list(WT.sourceT('a)) => WT.sourceT('a) =
     source;
   };
 
-let submitMessageEpic = (actionStream, _stateStream) =>
+let submitMessageEpic = (actionStream, fetch, status) =>
   actionStream
   |> Wonka.filter((. a) =>
        switch (a) {
@@ -31,7 +31,7 @@ let submitMessageEpic = (actionStream, _stateStream) =>
          Js.Dict.set(payload, "email", Js.Json.string(email));
          Js.Dict.set(payload, "message", Js.Json.string(message));
          Wonka.fromPromise(
-           Fetch.fetchWithInit(
+           fetch(
              "/send-message",
              Fetch.RequestInit.make(
                ~method_=Post,
@@ -46,7 +46,7 @@ let submitMessageEpic = (actionStream, _stateStream) =>
            ),
          )
          |> Wonka.map((. r) =>
-              switch (Fetch.Response.status(r)) {
+              switch (status(r)) {
               | 200 => Types.SubmitMessageSuccess
               | _ => Types.SubmitMessageFailure
               }
@@ -55,7 +55,7 @@ let submitMessageEpic = (actionStream, _stateStream) =>
        }
      );
 
-let submitMessageCompletionEpic = (actionStream, _stateStream, push) =>
+let submitMessageCompletionEpic = (actionStream, push) =>
   actionStream
   |> Wonka.filter((. a) =>
        switch (a) {
@@ -69,12 +69,12 @@ let submitMessageCompletionEpic = (actionStream, _stateStream, push) =>
        }
      );
 
-let rootEpic = (actionStream, stateStream) =>
+let rootEpic = (actionStream, _stateStream) =>
   combineEpics([
-    submitMessageEpic(actionStream, stateStream),
-    submitMessageCompletionEpic(
+    submitMessageEpic(
       actionStream,
-      stateStream,
-      ReasonReactRouter.push,
+      Fetch.fetchWithInit,
+      Fetch.Response.status,
     ),
+    submitMessageCompletionEpic(actionStream, ReasonReactRouter.push),
   ]);
