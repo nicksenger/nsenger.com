@@ -2,8 +2,16 @@ exception ApiError;
 
 let mailgunKeys =
   Mailgun.mailgunReq(
-    ~apiKey=Js.Dict.unsafeGet(Node.Process.process##env, "MAILGUN_API_KEY"),
-    ~domain=Js.Dict.unsafeGet(Node.Process.process##env, "MAILGUN_DOMAIN"),
+    ~apiKey=
+      switch (Js.Dict.get(Node.Process.process##env, "MAILGUN_API_KEY")) {
+      | Some(s) => s
+      | None => "foo"
+      },
+    ~domain=
+      switch (Js.Dict.get(Node.Process.process##env, "MAILGUN_DOMAIN")) {
+      | Some(s) => s
+      | None => "bar"
+      },
   );
 let mailgun = Mailgun.mailgun(mailgunKeys);
 let messages = Mailgun.Message.messages(mailgun);
@@ -14,7 +22,7 @@ let makeSuccessJson = () => {
   Js.Json.object_(json);
 };
 
-let sendMail = (email, message) => {
+let sendMail = (email, message, send) => {
   let emailData =
     Mailgun.emailData(
       ~from={j|Senger.io Visitor <$email>|j},
@@ -23,10 +31,10 @@ let sendMail = (email, message) => {
       ~text={j|$message|j},
     );
   Js.Promise.make((~resolve, ~reject) =>
-    Mailgun.Message.send(messages, emailData, b =>
+    send(messages, emailData, b =>
       switch (b) {
-      | Ok(_) => resolve(. makeSuccessJson())
-      | Error(_) => reject(. ApiError)
+      | Belt_Result.Ok(_) => resolve(. makeSuccessJson())
+      | Belt_Result.Error(_) => reject(. ApiError)
       }
     )
   );
@@ -44,13 +52,12 @@ let methodNotAllowed = res =>
      )
   |> Js.Promise.resolve;
 
-let getDictString = (dict, key) =>
-  switch (Js.Dict.get(dict, key)) {
-  | Some(json) => Js.Json.decodeString(json)
-  | _ => None
-  };
+let redirect = (res, success) =>
+  res
+  |> Express.Response.redirect({j|/contact?success=$success|j})
+  |> Js.Promise.resolve;
 
-let parseBody = body =>
+let parseMessageBody = body =>
   switch (body) {
   | Some(bj) =>
     switch (Js.Json.decodeObject(bj)) {
@@ -58,9 +65,9 @@ let parseBody = body =>
       let e = Js.Dict.get(b, "email");
       let m = Js.Dict.get(b, "message");
       switch (e) {
-      | Some(_) =>
+      | Some(email) =>
         switch (m) {
-        | Some(_) => Some((e, m))
+        | Some(message) => Some((email, message))
         | _ => None
         }
       | _ => None
@@ -70,30 +77,21 @@ let parseBody = body =>
   | _ => None
   };
 
-let redirect = (res, success) =>
-  res
-  |> Express.Response.redirect({j|/contact?success=$success|j})
-  |> Js.Promise.resolve;
-
 let sendMessageNoJs = (_next, req, res) =>
   switch (Express.Request.httpMethod(req)) {
   | Express.Request.Post =>
     let body = Express.Request.bodyJSON(req);
-    switch (parseBody(body)) {
-    | Some((e, m)) =>
-      switch (e) {
-      | Some(s) =>
-        switch (Contact.isValidEmail(Js.Json.decodeString(s))) {
-        | false => redirect(res, "false")
-        | _ => switch(m) {
-        | Some(message) => switch (Contact.isValidMessage(Js.Json.decodeString(message))) {
-        | true => sendMail(e, m) |> Js.Promise.then_(_ => redirect(res, "true"))
+    switch (parseMessageBody(body)) {
+    | Some((email, message)) =>
+      switch (Contact.isValidEmail(Js.Json.decodeString(email))) {
+      | false => redirect(res, "false")
+      | _ =>
+        switch (Contact.isValidMessage(Js.Json.decodeString(message))) {
+        | true =>
+          sendMail(email, message, Mailgun.Message.send)
+          |> Js.Promise.then_(_ => redirect(res, "true"))
         | _ => redirect(res, "false")
         }
-        | _ => redirect(res, "false")
-        }
-        }
-      | _ => redirect(res, "false")
       }
     | None => redirect(res, "false")
     };
@@ -104,9 +102,9 @@ let sendMessage = (_next, req, res) =>
   switch (Express.Request.httpMethod(req)) {
   | Express.Request.Post =>
     let body = Express.Request.bodyJSON(req);
-    switch (parseBody(body)) {
-    | Some((e, m)) =>
-      sendMail(e, m)
+    switch (parseMessageBody(body)) {
+    | Some((email, message)) =>
+      sendMail(email, message, Mailgun.Message.send)
       |> Js.Promise.then_(responseMessage =>
            res
            |> Express.Response.sendJson(responseMessage)

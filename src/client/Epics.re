@@ -1,20 +1,6 @@
-let combineEpics: list(Wonka.Types.sourceT('a)) => Wonka.Types.sourceT('a) =
-  actionStreams => {
-    let {Wonka.Types.source, Wonka.Types.next} = Wonka.makeSubject();
-    List.iter(
-      s =>
-        s((. a) =>
-          switch (a) {
-          | Wonka.Types.Push(a) => next(a)
-          | _ => ()
-          }
-        ),
-      actionStreams,
-    );
-    source;
-  };
+module WT = Wonka.Types;
 
-let submitMessageEpic = (actionStream, _stateStream) =>
+let submitMessageEpic = (actionStream, fetch, status) =>
   actionStream
   |> Wonka.filter((. a) =>
        switch (a) {
@@ -29,7 +15,7 @@ let submitMessageEpic = (actionStream, _stateStream) =>
          Js.Dict.set(payload, "email", Js.Json.string(email));
          Js.Dict.set(payload, "message", Js.Json.string(message));
          Wonka.fromPromise(
-           Fetch.fetchWithInit(
+           fetch(
              "/send-message",
              Fetch.RequestInit.make(
                ~method_=Post,
@@ -44,7 +30,7 @@ let submitMessageEpic = (actionStream, _stateStream) =>
            ),
          )
          |> Wonka.map((. r) =>
-              switch (Fetch.Response.status(r)) {
+              switch (status(r)) {
               | 200 => Types.SubmitMessageSuccess
               | _ => Types.SubmitMessageFailure
               }
@@ -53,22 +39,26 @@ let submitMessageEpic = (actionStream, _stateStream) =>
        }
      );
 
-let submitMessageCompletionEpic = (actionStream, _stateStream) =>
+let submitMessageCompletionEpic = (actionStream, push) =>
   actionStream
   |> Wonka.filter((. a) =>
        switch (a) {
        | Types.SubmitMessageSuccess =>
-         ReasonReactRouter.push("/contact?success=true");
+         push("/contact?success=true");
          false;
        | Types.SubmitMessageFailure =>
-         ReasonReactRouter.push("/contact?success=false");
+         push("/contact?success=false");
          false;
        | _ => false
        }
      );
 
-let rootEpic = (actionStream, stateStream) =>
-  combineEpics([
-    submitMessageEpic(actionStream, stateStream),
-    submitMessageCompletionEpic(actionStream, stateStream),
+let rootEpic = (actionStream, _stateStream) =>
+  UseEpicReducer.combineEpics([
+    submitMessageEpic(
+      actionStream,
+      Fetch.fetchWithInit,
+      Fetch.Response.status,
+    ),
+    submitMessageCompletionEpic(actionStream, ReasonReactRouter.push),
   ]);

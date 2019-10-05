@@ -1,0 +1,904 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Body renders the about page 1`] = `
+<div>
+  <header
+    class="sio__header"
+  >
+    <div
+      class="sio__menu-container"
+    >
+      <div
+        class="sio__menu-iching-small"
+      >
+        <div
+          class="iching__container"
+          style="height: 24px; width: 30px;"
+        >
+          <svg
+            class="iching__svg"
+            viewBox="0 0 15 12"
+          >
+            <g>
+              <path
+                d="M1,1 L5,1"
+              />
+              <path
+                d="M10,1 L14,1"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,3 L5,3"
+              />
+              <path
+                d="M10,3 L14,3"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,5 L7,5"
+              />
+              <path
+                d="M8,5 L14,5"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,7 L7,7"
+              />
+              <path
+                d="M8,7 L14,7"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,9 L5,9"
+              />
+              <path
+                d="M10,9 L14,9"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,11 L7,11"
+              />
+              <path
+                d="M8,11 L14,11"
+              />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main
+    class="sio__main"
+  >
+    <section
+      class="sio__name sio__name--hidden"
+    >
+      <img
+        class="sio__image"
+        src="static/prof.jpeg"
+      />
+      <h3
+        class="sio__title"
+      >
+        Nick Senger
+      </h3>
+    </section>
+    <section
+      class="sio__about"
+    >
+      <p>
+        I am a software engineer with several years of experience building scalable
+             web & native applications using modern techniques. Some of my interests include:
+             biotech, foreign language study, functional programming, and homebrewing.
+             If you need technical assistance developing an app or project, feel free
+             to reach out 
+        <span
+          class="sio__small-only"
+        >
+          .
+        </span>
+        <span
+          class="sio__big-only"
+        >
+           using the form below:
+        </span>
+      </p>
+    </section>
+    <section
+      class="sio__contact sio__contact--hidden"
+    >
+      <form
+        action="/send-message-no-js"
+        method="post"
+      >
+        <label>
+          Return Email
+          <input
+            class="sio__email"
+            name="email"
+            type="email"
+            value=""
+          />
+        </label>
+        <label>
+          Message
+          <textarea
+            class="sio__message"
+            name="message"
+          />
+        </label>
+        <button
+          class="sio__submit-btn"
+        >
+          SUBMIT
+        </button>
+      </form>
+    </section>
+  </main>
+  <div
+    class="sio__burger-container"
+  >
+    <div
+      class="sio__burger-panel"
+    >
+      <a
+        class=""
+        href="/home"
+      >
+        HOME
+      </a>
+      <a
+        class=""
+        href="/about"
+      >
+        ABOUT
+      </a>
+      <a
+        class=""
+        href="/contact"
+      >
+        CONTACT
+      </a>
+    </div>
+  </div>
+  <footer
+    class="sio__footer"
+  >
+    <a
+      class="sio__footer-link"
+      href="/home"
+    >
+      <svg
+        height="41.584"
+        viewBox="0 0 12.418 11.002"
+        width="46.934"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="currentColor"
+        >
+          <path
+            d="M1.688 10.725s-.01.277.26.277l3.13-.004.006-2.564s-.044-.423.366-.423h1.299c.485 0 .455.423.455.423l-.005 2.557h3.063c.345 0 .329-.346.329-.346V5.917L6.273 2.075 1.688 5.917v4.808"
+          />
+          <path
+            d="M0 5.56s.39.717 1.238 0L6.31 1.267l4.757 4.264c.983.709 1.35 0 1.35 0L6.31 0 0 5.56M10.951 1.257H9.728l.006 1.484 1.217 1.033V1.257"
+          />
+        </g>
+      </svg>
+      HOME
+    </a>
+    <a
+      class="sio__footer-link sio__footer-link--active"
+      href="/about"
+    >
+      <svg
+        height="46.181"
+        viewBox="0 0 12.418 12.219"
+        width="46.933"
+      >
+        <g
+          fill="currentColor"
+        >
+          <path
+            d="M3.032 0H.474A.475.475 0 0 0 0 .475v2.557c0 .262.212.475.474.475h2.558a.474.474 0 0 0 .473-.475V.475A.475.475 0 0 0 3.032 0M7.437 0H4.88a.475.475 0 0 0-.474.475v2.557c0 .262.213.475.474.475h2.557a.474.474 0 0 0 .474-.475V.475A.475.475 0 0 0 7.437 0M11.944 0H9.387a.475.475 0 0 0-.474.475v2.557c0 .262.212.475.474.475h2.557a.475.475 0 0 0 .474-.475V.475A.475.475 0 0 0 11.944 0M3.032 4.307H.474A.474.474 0 0 0 0 4.781v2.557c0 .262.212.474.474.474h2.558a.474.474 0 0 0 .473-.474V4.781a.474.474 0 0 0-.473-.474M7.437 4.307H4.88a.474.474 0 0 0-.474.474v2.557c0 .262.213.474.474.474h2.557a.474.474 0 0 0 .474-.474V4.781a.474.474 0 0 0-.474-.474M11.944 4.307H9.387a.474.474 0 0 0-.474.474v2.557c0 .262.212.474.474.474h2.557a.474.474 0 0 0 .474-.474V4.781a.474.474 0 0 0-.474-.474M3.032 8.713H.474A.474.474 0 0 0 0 9.187v2.557c0 .262.212.475.474.475h2.558a.474.474 0 0 0 .473-.475V9.187a.474.474 0 0 0-.473-.474M7.437 8.713H4.88a.474.474 0 0 0-.474.474v2.557c0 .262.213.475.474.475h2.557a.474.474 0 0 0 .474-.475V9.187a.474.474 0 0 0-.474-.474M11.944 8.713H9.387a.474.474 0 0 0-.474.474v2.557c0 .262.212.475.474.475h2.557a.475.475 0 0 0 .474-.475V9.187a.474.474 0 0 0-.474-.474"
+          />
+        </g>
+      </svg>
+      ABOUT
+    </a>
+    <a
+      class="sio__footer-link"
+      href="/contact"
+    >
+      <svg
+        height="64.092"
+        viewBox="0 0 15.819 16.958"
+        width="59.787"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="currentColor"
+        >
+          <path
+            d="M10.298 0L2.056 9.133l1.222 1.104 8.242-9.132L10.298 0M14.596 3.88l-8.242 9.132 1.222 1.103 8.243-9.132-1.223-1.104M11.825 1.379L3.582 10.51l2.467 2.226 8.243-9.131-2.467-2.227M.52 14.734L0 16.958l2.159-.744a2.273 2.273 0 0 0-1.639-1.48M.687 14.268A2.659 2.659 0 0 1 2.606 16l4.565-1.571-5.388-4.856-1.096 4.695"
+          />
+        </g>
+      </svg>
+      CONTACT
+    </a>
+  </footer>
+  <div
+    class="sio__loader sio__loader--hidden"
+  >
+    <div
+      class="sio__spinner"
+    >
+      <div
+        class="iching__container"
+        style="height: 40px; width: 50px;"
+      >
+        <svg
+          class="iching__svg"
+          viewBox="0 0 15 12"
+        >
+          <g>
+            <path
+              d="M1,1 L5,1"
+            />
+            <path
+              d="M10,1 L14,1"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,3 L5,3"
+            />
+            <path
+              d="M10,3 L14,3"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,5 L5,5"
+            />
+            <path
+              d="M10,5 L14,5"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,7 L7,7"
+            />
+            <path
+              d="M8,7 L14,7"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,9 L7,9"
+            />
+            <path
+              d="M8,9 L14,9"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,11 L7,11"
+            />
+            <path
+              d="M8,11 L14,11"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Body renders the contact page 1`] = `
+<div>
+  <header
+    class="sio__header"
+  >
+    <div
+      class="sio__menu-container"
+    >
+      <div
+        class="sio__menu-iching-small"
+      >
+        <div
+          class="iching__container"
+          style="height: 24px; width: 30px;"
+        >
+          <svg
+            class="iching__svg"
+            viewBox="0 0 15 12"
+          >
+            <g>
+              <path
+                d="M1,1 L7,1"
+              />
+              <path
+                d="M8,1 L14,1"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,3 L7,3"
+              />
+              <path
+                d="M8,3 L14,3"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,5 L7,5"
+              />
+              <path
+                d="M8,5 L14,5"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,7 L5,7"
+              />
+              <path
+                d="M10,7 L14,7"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,9 L5,9"
+              />
+              <path
+                d="M10,9 L14,9"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,11 L5,11"
+              />
+              <path
+                d="M10,11 L14,11"
+              />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main
+    class="sio__main"
+  >
+    <section
+      class="sio__name sio__name--hidden"
+    >
+      <img
+        class="sio__image"
+        src="static/prof.jpeg"
+      />
+      <h3
+        class="sio__title"
+      >
+        Nick Senger
+      </h3>
+    </section>
+    <section
+      class="sio__about sio__about--hidden"
+    >
+      <p>
+        I am a software engineer with several years of experience building scalable
+             web & native applications using modern techniques. Some of my interests include:
+             biotech, foreign language study, functional programming, and homebrewing.
+             If you need technical assistance developing an app or project, feel free
+             to reach out 
+        <span
+          class="sio__small-only"
+        >
+          .
+        </span>
+        <span
+          class="sio__big-only"
+        >
+           using the form below:
+        </span>
+      </p>
+    </section>
+    <section
+      class="sio__contact"
+    >
+      <form
+        action="/send-message-no-js"
+        method="post"
+      >
+        <label>
+          Return Email
+          <input
+            class="sio__email"
+            name="email"
+            type="email"
+            value=""
+          />
+        </label>
+        <label>
+          Message
+          <textarea
+            class="sio__message"
+            name="message"
+          />
+        </label>
+        <button
+          class="sio__submit-btn"
+        >
+          SUBMIT
+        </button>
+      </form>
+    </section>
+  </main>
+  <div
+    class="sio__burger-container"
+  >
+    <div
+      class="sio__burger-panel"
+    >
+      <a
+        class=""
+        href="/home"
+      >
+        HOME
+      </a>
+      <a
+        class=""
+        href="/about"
+      >
+        ABOUT
+      </a>
+      <a
+        class=""
+        href="/contact"
+      >
+        CONTACT
+      </a>
+    </div>
+  </div>
+  <footer
+    class="sio__footer"
+  >
+    <a
+      class="sio__footer-link"
+      href="/home"
+    >
+      <svg
+        height="41.584"
+        viewBox="0 0 12.418 11.002"
+        width="46.934"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="currentColor"
+        >
+          <path
+            d="M1.688 10.725s-.01.277.26.277l3.13-.004.006-2.564s-.044-.423.366-.423h1.299c.485 0 .455.423.455.423l-.005 2.557h3.063c.345 0 .329-.346.329-.346V5.917L6.273 2.075 1.688 5.917v4.808"
+          />
+          <path
+            d="M0 5.56s.39.717 1.238 0L6.31 1.267l4.757 4.264c.983.709 1.35 0 1.35 0L6.31 0 0 5.56M10.951 1.257H9.728l.006 1.484 1.217 1.033V1.257"
+          />
+        </g>
+      </svg>
+      HOME
+    </a>
+    <a
+      class="sio__footer-link"
+      href="/about"
+    >
+      <svg
+        height="46.181"
+        viewBox="0 0 12.418 12.219"
+        width="46.933"
+      >
+        <g
+          fill="currentColor"
+        >
+          <path
+            d="M3.032 0H.474A.475.475 0 0 0 0 .475v2.557c0 .262.212.475.474.475h2.558a.474.474 0 0 0 .473-.475V.475A.475.475 0 0 0 3.032 0M7.437 0H4.88a.475.475 0 0 0-.474.475v2.557c0 .262.213.475.474.475h2.557a.474.474 0 0 0 .474-.475V.475A.475.475 0 0 0 7.437 0M11.944 0H9.387a.475.475 0 0 0-.474.475v2.557c0 .262.212.475.474.475h2.557a.475.475 0 0 0 .474-.475V.475A.475.475 0 0 0 11.944 0M3.032 4.307H.474A.474.474 0 0 0 0 4.781v2.557c0 .262.212.474.474.474h2.558a.474.474 0 0 0 .473-.474V4.781a.474.474 0 0 0-.473-.474M7.437 4.307H4.88a.474.474 0 0 0-.474.474v2.557c0 .262.213.474.474.474h2.557a.474.474 0 0 0 .474-.474V4.781a.474.474 0 0 0-.474-.474M11.944 4.307H9.387a.474.474 0 0 0-.474.474v2.557c0 .262.212.474.474.474h2.557a.474.474 0 0 0 .474-.474V4.781a.474.474 0 0 0-.474-.474M3.032 8.713H.474A.474.474 0 0 0 0 9.187v2.557c0 .262.212.475.474.475h2.558a.474.474 0 0 0 .473-.475V9.187a.474.474 0 0 0-.473-.474M7.437 8.713H4.88a.474.474 0 0 0-.474.474v2.557c0 .262.213.475.474.475h2.557a.474.474 0 0 0 .474-.475V9.187a.474.474 0 0 0-.474-.474M11.944 8.713H9.387a.474.474 0 0 0-.474.474v2.557c0 .262.212.475.474.475h2.557a.475.475 0 0 0 .474-.475V9.187a.474.474 0 0 0-.474-.474"
+          />
+        </g>
+      </svg>
+      ABOUT
+    </a>
+    <a
+      class="sio__footer-link sio__footer-link--active"
+      href="/contact"
+    >
+      <svg
+        height="64.092"
+        viewBox="0 0 15.819 16.958"
+        width="59.787"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="currentColor"
+        >
+          <path
+            d="M10.298 0L2.056 9.133l1.222 1.104 8.242-9.132L10.298 0M14.596 3.88l-8.242 9.132 1.222 1.103 8.243-9.132-1.223-1.104M11.825 1.379L3.582 10.51l2.467 2.226 8.243-9.131-2.467-2.227M.52 14.734L0 16.958l2.159-.744a2.273 2.273 0 0 0-1.639-1.48M.687 14.268A2.659 2.659 0 0 1 2.606 16l4.565-1.571-5.388-4.856-1.096 4.695"
+          />
+        </g>
+      </svg>
+      CONTACT
+    </a>
+  </footer>
+  <div
+    class="sio__loader sio__loader--hidden"
+  >
+    <div
+      class="sio__spinner"
+    >
+      <div
+        class="iching__container"
+        style="height: 40px; width: 50px;"
+      >
+        <svg
+          class="iching__svg"
+          viewBox="0 0 15 12"
+        >
+          <g>
+            <path
+              d="M1,1 L5,1"
+            />
+            <path
+              d="M10,1 L14,1"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,3 L5,3"
+            />
+            <path
+              d="M10,3 L14,3"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,5 L5,5"
+            />
+            <path
+              d="M10,5 L14,5"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,7 L5,7"
+            />
+            <path
+              d="M10,7 L14,7"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,9 L5,9"
+            />
+            <path
+              d="M10,9 L14,9"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,11 L5,11"
+            />
+            <path
+              d="M10,11 L14,11"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Body renders the home page 1`] = `
+<div>
+  <header
+    class="sio__header"
+  >
+    <div
+      class="sio__menu-container"
+    >
+      <div
+        class="sio__menu-iching-small"
+      >
+        <div
+          class="iching__container"
+          style="height: 24px; width: 30px;"
+        >
+          <svg
+            class="iching__svg"
+            viewBox="0 0 15 12"
+          >
+            <g>
+              <path
+                d="M1,1 L7,1"
+              />
+              <path
+                d="M8,1 L14,1"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,3 L5,3"
+              />
+              <path
+                d="M10,3 L14,3"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,5 L7,5"
+              />
+              <path
+                d="M8,5 L14,5"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,7 L5,7"
+              />
+              <path
+                d="M10,7 L14,7"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,9 L5,9"
+              />
+              <path
+                d="M10,9 L14,9"
+              />
+            </g>
+            <g>
+              <path
+                d="M1,11 L7,11"
+              />
+              <path
+                d="M8,11 L14,11"
+              />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main
+    class="sio__main"
+  >
+    <section
+      class="sio__name"
+    >
+      <img
+        class="sio__image"
+        src="static/prof.jpeg"
+      />
+      <h3
+        class="sio__title"
+      >
+        Nick Senger
+      </h3>
+    </section>
+    <section
+      class="sio__about sio__about--hidden"
+    >
+      <p>
+        I am a software engineer with several years of experience building scalable
+             web & native applications using modern techniques. Some of my interests include:
+             biotech, foreign language study, functional programming, and homebrewing.
+             If you need technical assistance developing an app or project, feel free
+             to reach out 
+        <span
+          class="sio__small-only"
+        >
+          .
+        </span>
+        <span
+          class="sio__big-only"
+        >
+           using the form below:
+        </span>
+      </p>
+    </section>
+    <section
+      class="sio__contact sio__contact--hidden"
+    >
+      <form
+        action="/send-message-no-js"
+        method="post"
+      >
+        <label>
+          Return Email
+          <input
+            class="sio__email"
+            name="email"
+            type="email"
+            value=""
+          />
+        </label>
+        <label>
+          Message
+          <textarea
+            class="sio__message"
+            name="message"
+          />
+        </label>
+        <button
+          class="sio__submit-btn"
+        >
+          SUBMIT
+        </button>
+      </form>
+    </section>
+  </main>
+  <div
+    class="sio__burger-container"
+  >
+    <div
+      class="sio__burger-panel"
+    >
+      <a
+        class=""
+        href="/home"
+      >
+        HOME
+      </a>
+      <a
+        class=""
+        href="/about"
+      >
+        ABOUT
+      </a>
+      <a
+        class=""
+        href="/contact"
+      >
+        CONTACT
+      </a>
+    </div>
+  </div>
+  <footer
+    class="sio__footer"
+  >
+    <a
+      class="sio__footer-link sio__footer-link--active"
+      href="/home"
+    >
+      <svg
+        height="41.584"
+        viewBox="0 0 12.418 11.002"
+        width="46.934"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="currentColor"
+        >
+          <path
+            d="M1.688 10.725s-.01.277.26.277l3.13-.004.006-2.564s-.044-.423.366-.423h1.299c.485 0 .455.423.455.423l-.005 2.557h3.063c.345 0 .329-.346.329-.346V5.917L6.273 2.075 1.688 5.917v4.808"
+          />
+          <path
+            d="M0 5.56s.39.717 1.238 0L6.31 1.267l4.757 4.264c.983.709 1.35 0 1.35 0L6.31 0 0 5.56M10.951 1.257H9.728l.006 1.484 1.217 1.033V1.257"
+          />
+        </g>
+      </svg>
+      HOME
+    </a>
+    <a
+      class="sio__footer-link"
+      href="/about"
+    >
+      <svg
+        height="46.181"
+        viewBox="0 0 12.418 12.219"
+        width="46.933"
+      >
+        <g
+          fill="currentColor"
+        >
+          <path
+            d="M3.032 0H.474A.475.475 0 0 0 0 .475v2.557c0 .262.212.475.474.475h2.558a.474.474 0 0 0 .473-.475V.475A.475.475 0 0 0 3.032 0M7.437 0H4.88a.475.475 0 0 0-.474.475v2.557c0 .262.213.475.474.475h2.557a.474.474 0 0 0 .474-.475V.475A.475.475 0 0 0 7.437 0M11.944 0H9.387a.475.475 0 0 0-.474.475v2.557c0 .262.212.475.474.475h2.557a.475.475 0 0 0 .474-.475V.475A.475.475 0 0 0 11.944 0M3.032 4.307H.474A.474.474 0 0 0 0 4.781v2.557c0 .262.212.474.474.474h2.558a.474.474 0 0 0 .473-.474V4.781a.474.474 0 0 0-.473-.474M7.437 4.307H4.88a.474.474 0 0 0-.474.474v2.557c0 .262.213.474.474.474h2.557a.474.474 0 0 0 .474-.474V4.781a.474.474 0 0 0-.474-.474M11.944 4.307H9.387a.474.474 0 0 0-.474.474v2.557c0 .262.212.474.474.474h2.557a.474.474 0 0 0 .474-.474V4.781a.474.474 0 0 0-.474-.474M3.032 8.713H.474A.474.474 0 0 0 0 9.187v2.557c0 .262.212.475.474.475h2.558a.474.474 0 0 0 .473-.475V9.187a.474.474 0 0 0-.473-.474M7.437 8.713H4.88a.474.474 0 0 0-.474.474v2.557c0 .262.213.475.474.475h2.557a.474.474 0 0 0 .474-.475V9.187a.474.474 0 0 0-.474-.474M11.944 8.713H9.387a.474.474 0 0 0-.474.474v2.557c0 .262.212.475.474.475h2.557a.475.475 0 0 0 .474-.475V9.187a.474.474 0 0 0-.474-.474"
+          />
+        </g>
+      </svg>
+      ABOUT
+    </a>
+    <a
+      class="sio__footer-link"
+      href="/contact"
+    >
+      <svg
+        height="64.092"
+        viewBox="0 0 15.819 16.958"
+        width="59.787"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g
+          fill="currentColor"
+        >
+          <path
+            d="M10.298 0L2.056 9.133l1.222 1.104 8.242-9.132L10.298 0M14.596 3.88l-8.242 9.132 1.222 1.103 8.243-9.132-1.223-1.104M11.825 1.379L3.582 10.51l2.467 2.226 8.243-9.131-2.467-2.227M.52 14.734L0 16.958l2.159-.744a2.273 2.273 0 0 0-1.639-1.48M.687 14.268A2.659 2.659 0 0 1 2.606 16l4.565-1.571-5.388-4.856-1.096 4.695"
+          />
+        </g>
+      </svg>
+      CONTACT
+    </a>
+  </footer>
+  <div
+    class="sio__loader sio__loader--hidden"
+  >
+    <div
+      class="sio__spinner"
+    >
+      <div
+        class="iching__container"
+        style="height: 40px; width: 50px;"
+      >
+        <svg
+          class="iching__svg"
+          viewBox="0 0 15 12"
+        >
+          <g>
+            <path
+              d="M1,1 L5,1"
+            />
+            <path
+              d="M10,1 L14,1"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,3 L5,3"
+            />
+            <path
+              d="M10,3 L14,3"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,5 L7,5"
+            />
+            <path
+              d="M8,5 L14,5"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,7 L7,7"
+            />
+            <path
+              d="M8,7 L14,7"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,9 L5,9"
+            />
+            <path
+              d="M10,9 L14,9"
+            />
+          </g>
+          <g>
+            <path
+              d="M1,11 L7,11"
+            />
+            <path
+              d="M8,11 L14,11"
+            />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Name renders when hidden 1`] = `
+<div>
+  <section
+    class="sio__name sio__name--hidden"
+  >
+    <img
+      class="sio__image"
+      src="static/prof.jpeg"
+    />
+    <h3
+      class="sio__title"
+    >
+      Nick Senger
+    </h3>
+  </section>
+</div>
+`;
+
+exports[`Name renders when visible 1`] = `
+<div>
+  <section
+    class="sio__name"
+  >
+    <img
+      class="sio__image"
+      src="static/prof.jpeg"
+    />
+    <h3
+      class="sio__title"
+    >
+      Nick Senger
+    </h3>
+  </section>
+</div>
+`;

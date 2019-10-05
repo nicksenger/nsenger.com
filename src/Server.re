@@ -1,16 +1,14 @@
 let app = Express.App.make();
 Express.App.use(app, BodyParser.json());
 Express.App.use(app, BodyParser.urlencoded((), ~extended=true));
-let renderHTML = (_next, req, res) => {
+
+let getUrl = (path, query) => {
   let url: ReasonReactRouter.url = {
     path:
-      List.filter(
-        s => s != "",
-        Array.to_list(Js.String.split("/", Express.Request.path(req))),
-      ),
+      List.filter(s => s != "", Array.to_list(Js.String.split("/", path))),
     hash: "",
     search:
-      switch (Js.Dict.get(Express.Request.query(req), "success")) {
+      switch (Js.Dict.get(query, "success")) {
       | Some(v) =>
         switch (Js.Json.decodeString(v)) {
         | Some(s) =>
@@ -24,6 +22,11 @@ let renderHTML = (_next, req, res) => {
       | _ => ""
       },
   };
+  url;
+};
+
+let renderHTML = (_next, req, res) => {
+  let url = getUrl(Express.Request.path(req), Express.Request.query(req));
   let content =
     ReactDOMServerRe.renderToString(<Body serverUrl=(Some(url)) />);
   Express.Response.sendString(
@@ -75,7 +78,11 @@ let onListen = e =>
   | exception (Js.Exn.Error(e)) =>
     Js.log(e);
     Node.Process.exit(1);
-  | _ => Js.log("listening at localhost:" ++ string_of_int(port))
+  | _ =>
+    switch (Js.Dict.get(Node.Process.process##env, "MAILGUN_API_KEY")) {
+    | Some(_) => Js.log("listening at localhost:" ++ string_of_int(port))
+    | None => ()
+    }
   };
 
 Express.App.listen(app, ~onListen, ~port, ());

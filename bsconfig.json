@@ -4,10 +4,14 @@
   "reason": {
     "react-jsx": 3
   },
-  "sources": {
+  "sources": [{
     "dir" : "src",
     "subdirs" : true
-  },
+  }, {
+    "dir": "test",
+    "subdirs": true,
+    "type": "dev"
+  }],
   "package-specs": [{
     "module": "commonjs",
     "in-source": true
@@ -19,7 +23,11 @@
     "bs-express",
     "wonka",
     "bs-fetch",
-    "@piq9117/bs-mailgun"
+    "@piq9117/bs-mailgun",
+    "@glennsl/bs-jest",
+    "bs-react-testing-library",
+    "bs-dom-testing-library",
+    "bs-jest-dom"
   ],
   "refmt": 3
 }
