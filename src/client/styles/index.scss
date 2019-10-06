@@ -16,11 +16,32 @@
   border-radius: 100px;
   border: 2px solid white;
   box-shadow: 0px 2px 4px $gray;
-  margin-bottom: 1rem;
 }
 
 .sio__title {
+  @include margin-top(1);
+  @include margin-bottom(1.5);
+}
+
+.sio__social-container {
   @include margin-bottom(1);
+  @include margin-top(1);
+}
+
+.sio__social-link {
+  @include margin-left(0.5);
+  @include margin-right(0.5);
+  > svg {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 1);
+    }
+  
+    transition: background-color 0.5s ease;
+  }
+
 }
 
 .sio__container {
