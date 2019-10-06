@@ -38,6 +38,7 @@ let renderHTML = (_next, req, res) => {
           <meta name="viewport" content="width=device-width, initial-scale=1">
           <title>Senger.io</title>
           <link rel="stylesheet" href="/static/bundle.css">
+          <link rel="manifest" href="/static/webapp.manifest">
           <meta name="theme-color" content="#ffffff">
         </head>
         <body class="sio__body">
@@ -45,6 +46,13 @@ let renderHTML = (_next, req, res) => {
             $content
           </div>
         </body>
+        <script>
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+              navigator.serviceWorker.register('/static/sw.js');
+            });
+          }
+        </script>
         <script defer>
           var spa = document.createElement('script');
           spa.type = "text/javascript";

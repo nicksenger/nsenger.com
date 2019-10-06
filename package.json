@@ -2,9 +2,10 @@
   "name": "senger-io",
   "version": "0.1.0",
   "scripts": {
-    "build": "run-s build:server build:client",
+    "build": "run-s build:server build:client copy:assets",
     "build:client": "webpack --mode production",
     "build:server": "bsb -make-world",
+    "copy:assets": "cp -r ./assets/* ./src/client/dist/",
     "watch": "run-p watch:*",
     "watch:bs": "bsb -make-world -w",
     "watch:client": "webpack -w --mode development",
