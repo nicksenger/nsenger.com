@@ -36,7 +36,7 @@ let renderHTML = (_next, req, res) => {
         <head>
           <meta charset="utf-8">
           <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>Senger.io</title>
+          <title>Nick Senger</title>
           <link rel="stylesheet" href="/static/bundle.css">
           <link rel="manifest" href="/static/webapp.manifest">
           <meta name="theme-color" content="#ffffff">
