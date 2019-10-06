@@ -49,7 +49,7 @@ let renderHTML = (_next, req, res) => {
         <script>
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-              navigator.serviceWorker.register('/static/sw.js');
+              navigator.serviceWorker.register('/sw.js')
             });
           }
         </script>
@@ -64,6 +64,11 @@ let renderHTML = (_next, req, res) => {
     res,
   );
 };
+
+Express.Static.defaultOptions()
+|> Express.Static.make("src/client/dist/sw.js")
+|> Express.Static.asMiddleware
+|> Express.App.useOnPath(app, ~path="/sw.js");
 
 Express.Static.defaultOptions()
 |> Express.Static.make("src/client/dist/")

@@ -1,54 +1,60 @@
-type cache('a) = {
-  addAll: list(string) => Js.Promise.t('a),
-  match: unit => Js.Promise.t(Js.Promise.t(unit)),
-};
-type event = {
-  waitUntil: Js.Promise.t(unit) => unit,
-  request: unit,
-  respondWith: Js.Promise.t(unit) => unit,
-};
+[@bs.deriving abstract]
+type request = {url: string};
 
+[@bs.deriving abstract]
+type event = {request};
+
+type response;
+type cache;
+
+[@bs.val] external fetch : request => Js.Promise.t(response) = "fetch";
 [@bs.scope "self"] [@bs.val]
 external addEventListener : (string, event => unit) => unit =
   "addEventListener";
 [@bs.scope "caches"] [@bs.val]
-external open_ : string => Js.Promise.t(cache(unit)) = "open";
+external open_ : string => Js.Promise.t(cache) = "open";
+[@bs.scope "caches"] [@bs.val]
+external match : request => Js.Promise.t(response) = "match";
+[@bs.send]
+external waitUntil : (event, Js.Promise.t('a)) => unit = "waitUntil";
+[@bs.send]
+external respondWith : (event, Js.Promise.t('a)) => unit = "respondWith";
+[@bs.send]
+external addAll : (cache, array(string)) => Js.Promise.t(unit) = "addAll";
+[@bs.send] external put : (cache, string, response) => unit = "put";
+[@bs.send] external clone : response => response = "clone";
+
 let cacheName = "senger-io-v1";
 let filesToCache = [
+  "/",
+  "/home",
+  "/about",
+  "/contact",
+  "/index.html",
   "/static/prof.jpeg",
   "/static/bundle.css",
   "/static/bundle.js",
-  "index.html",
 ];
 
-addEventListener("install", _e => {
-  let waitUntil: Js.Promise.t('a) => unit = [%bs.raw {| _e.waitUntil |}];
+addEventListener("install", event =>
   waitUntil(
+    event,
     open_(cacheName)
-    |> Js.Promise.then_(_cache => {
-         let addAll = [%bs.raw {| _cache.addAll(filesToCache) |}];
-         addAll;
-       }),
-  );
-});
+    |> Js.Promise.then_(cache => addAll(cache, Array.of_list(filesToCache))),
+  )
+);
 
-addEventListener("fetch", _e => {
-  let respondWith: 'a => 'b = [%bs.raw {| _e.respondWith |}];
-  let p: Js.Promise.t('a) = [%bs.raw {| fetch(event.request) |}];
-  respondWith(
-    p
-    |> Js.Promise.then_(response =>
-         open_(cacheName)
-         |> Js.Promise.then_(_cache => {
-              ignore(
-                [%bs.raw {| _cache.put(_e.request.url, response.clone()) |}],
-              );
-              response;
-            })
-         |> Js.Promise.catch(_err => {
-              let match = [%bs.raw {| caches.match(e.request) |}];
-              match;
-            })
-       ),
-  );
-});
+let fetchWithFallback = event =>
+  fetch(requestGet(event))
+  |> Js.Promise.then_(response =>
+       open_(cacheName)
+       |> Js.Promise.then_(cache => {
+            put(cache, urlGet(requestGet(event)), clone(response));
+            Js.Promise.resolve(response);
+          })
+     )
+  |> Js.Promise.catch(_err => match(requestGet(event)));
+
+addEventListener("fetch", event =>
+  respondWith(event, fetchWithFallback(event))
+);
