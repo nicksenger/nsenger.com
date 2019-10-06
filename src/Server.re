@@ -85,7 +85,7 @@ Endpoints.sendMessage
 
 renderHTML |> Express.Middleware.from |> Express.App.useOnPath(~path="/", app);
 
-let port = 3000;
+let port = 5000;
 let onListen = e =>
   switch (e) {
   | exception (Js.Exn.Error(e)) =>
