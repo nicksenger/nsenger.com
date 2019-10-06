@@ -5,13 +5,14 @@
     "build": "run-s build:server build:client copy:assets",
     "build:client": "webpack --mode production",
     "build:server": "bsb -make-world",
+    "clean": "bsb -clean-world",
     "copy:assets": "cp -r ./assets/* ./src/client/dist/",
+    "start": "node src/Server.bs.js",
+    "test": "bsb -make-world && jest",
     "watch": "run-p watch:*",
     "watch:bs": "bsb -make-world -w",
     "watch:client": "webpack -w --mode development",
-    "watch:server": "nodemon -r dotenv/config src/Server.bs.js",
-    "clean": "bsb -clean-world",
-    "test": "bsb -make-world && jest"
+    "watch:server": "nodemon -r dotenv/config src/Server.bs.js"
   },
   "keywords": [
     "BuckleScript"
