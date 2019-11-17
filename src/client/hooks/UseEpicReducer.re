@@ -19,34 +19,46 @@ let useEpicReducer:
     /* Set up the component/application state */
     let (state, setState) = React.useState(_ => initialState);
 
-    /* Set up the action stream */
-    let {WT.source: actionStream, WT.next} = Wonka.makeSubject();
+    /* Memoize creation of streams. Note that if the identity of `reducer`, `epic`, or `initialState` is changed,
+       then the state will be reset. Generally these dependencies should remain constant for a given application. */
+    let dispatch =
+      React.useMemo3(
+        _ => {
+          /* Set up the main action stream */
+          let {WT.source: actionStream, WT.next} = Wonka.makeSubject();
 
-    /* Emit any dispatched actions from the action stream */
-    let dispatch = a => next(a);
+          /* Set up the state stream, which emits a new state for every action emitted from the main action stream */
+          let newStateStream =
+            Wonka.scan(
+              (. s, a) => reducer(s, a),
+              initialState,
+              actionStream,
+            );
 
-    /* Set up the state stream, which emits the new state for every dispatched action */
-    let newStateStream =
-      Wonka.scan((. s, a) => reducer(s, a), initialState, actionStream);
+          /* Always set the state equal to the latest emission from the state stream */
+          newStateStream((. signal) =>
+            switch (signal) {
+            | WT.Push(s) => setState(_s => s)
+            | _ => ()
+            }
+          );
 
-    /* Always set the state equal to the latest emission from the state stream */
-    newStateStream((. signal) =>
-      switch (signal) {
-      | WT.Push(s) => setState(_s => s)
-      | _ => ()
-      }
-    );
+          /* Invoke the provided epic with the action and state streams to get the epic action stream */
+          let epicActionStream = epic(actionStream, newStateStream);
 
-    /* Invoke the provided epic with the action and state streams to get another action stream */
-    let epicActionStream = epic(actionStream, newStateStream);
+          /* Pipe actions from the epic action stream to the main action stream */
+          epicActionStream((. signal) =>
+            switch (signal) {
+            | WT.Push(a) => next(a)
+            | _ => ()
+            }
+          );
 
-    /* Dispatch any actions emitted from the epic action stream */
-    epicActionStream((. signal) =>
-      switch (signal) {
-      | WT.Push(a) => dispatch(a)
-      | _ => ()
-      }
-    );
+          /* Return the dispatch function, which just emits the provided action from the action stream */
+          a => next(a);
+        },
+        (reducer, epic, initialState),
+      );
 
     /* Return the state and dispatch function for consumption in the component tree */
     (state, dispatch);
