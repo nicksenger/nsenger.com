@@ -6,10 +6,8 @@ let make = (~visible: bool) =>
       (
         React.string(
           {j|I am a software engineer with several years of experience building scalable
-             web & native applications using modern techniques. Some of my interests include:
-             biotech, foreign language study, typed functional programming, and homebrewing.
-             If you need technical assistance developing an app or project, feel free
-             to reach out |j},
+             web & native applications using modern techniques. If you need technical
+             assistance developing an app or project, feel free to reach out |j},
         )
       )
       <span className="sio__small-only"> (React.string(".")) </span>
