@@ -1,4 +1,4 @@
-# Senger IO
+# nsenger.com
 
 Small but epic isomorphic & progressive web app written in ReasonML
 
